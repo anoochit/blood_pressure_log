@@ -23,7 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0 
+  cupertino_icons: ^1.0.0
+  date_time_picker: ^1.0.2
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   intl: ^0.16.1
@@ -33,13 +34,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^1.10.4
-  hive_generator: ^0.8.2
   flutter_launcher_icons: "^0.8.0"
+  hive_generator: ^0.8.2
 flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icons/launcher.png"
- 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -52,7 +52,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/icons/launcher.png
+    - assets/icons/launcher.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,4 +1,5 @@
 import 'package:blood_pressure/pages/add.dart';
+import 'package:blood_pressure/style/style.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,9 +26,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         title: Text(
           _pageTitle[_currentIndex],
-          style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.w800),
+          style: kAppBarTitle,
         ),
         centerTitle: true,
         elevation: 0.0,
@@ -42,9 +41,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: kBottomNavigationBarBackgroundColor,
         currentIndex: _currentIndex,
-        fixedColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.indigo[200],
+        fixedColor: kBottomNavigationBarFixedColor,
+        unselectedItemColor: kBottomNavigationBarUnselectedItemColor,
         type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(

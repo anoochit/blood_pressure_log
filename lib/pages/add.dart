@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:blood_pressure/models/type_item.dart';
@@ -46,7 +47,7 @@ class _AddPageState extends State<AddPage> {
             color: Theme.of(context).buttonColor,
             width: 1.0,
           ),
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(8.0),
         ),
         height: (MediaQuery.of(context).size.height * 0.68),
         child: Padding(
@@ -137,44 +138,59 @@ class _AddPageState extends State<AddPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Icon(
-                          Icons.calendar_today,
-                          color: Theme.of(context).textTheme.bodyText2.color,
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text((_dateValue != null) ? _dateValue : "Today")
-                      ],
+                    InkWell(
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Icon(
+                            Icons.calendar_today,
+                            color: Theme.of(context).textTheme.bodyText2.color,
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text((_dateValue != null) ? _dateValue : "Today")
+                        ],
+                      ),
+                      onTap: () {
+                        log("open date picker");
+                      },
                     ),
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Icon(
-                          Icons.watch_later_outlined,
-                          color: Theme.of(context).textTheme.bodyText2.color,
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text((_timeValue != null) ? _timeValue : "Today")
-                      ],
+                    InkWell(
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Icon(
+                            Icons.watch_later_outlined,
+                            color: Theme.of(context).textTheme.bodyText2.color,
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text((_timeValue != null) ? _timeValue : "Today")
+                        ],
+                      ),
+                      onTap: () {
+                        log("open time picker");
+                      },
                     ),
-                    Flex(
-                      direction: Axis.horizontal,
-                      children: [
-                        Icon(
-                          Icons.label_outline,
-                          color: Theme.of(context).textTheme.bodyText2.color,
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Text("Tags")
-                      ],
+                    InkWell(
+                      child: Flex(
+                        direction: Axis.horizontal,
+                        children: [
+                          Icon(
+                            Icons.label_outline,
+                            color: Theme.of(context).textTheme.bodyText2.color,
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          Text("Tags")
+                        ],
+                      ),
+                      onTap: () {
+                        log("open tag dialog");
+                      },
                     )
                   ],
                 ),

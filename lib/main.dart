@@ -1,5 +1,6 @@
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/pages/home.dart';
+import 'package:blood_pressure/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -16,13 +17,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BP Log',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
-        canvasColor: Colors.white,
-        textTheme: TextTheme(
-          bodyText2: TextStyle(
-            color: Colors.grey[700],
-          ),
-        ),
+        primarySwatch: kPrimaryColor,
+        canvasColor: kCanvasColor,
+        textTheme: kTextTheme,
       ),
       home: HomePage(),
     );
