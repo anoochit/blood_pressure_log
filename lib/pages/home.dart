@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           _pageTitle[_currentIndex],
           style: TextStyle(
               color: Theme.of(context).primaryColor,
-              fontWeight: FontWeight.w700),
+              fontWeight: FontWeight.w800),
         ),
         centerTitle: true,
         elevation: 0.0,

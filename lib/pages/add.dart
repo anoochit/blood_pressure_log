@@ -48,7 +48,7 @@ class _AddPageState extends State<AddPage> {
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
-        height: (MediaQuery.of(context).size.height * 0.7),
+        height: (MediaQuery.of(context).size.height * 0.68),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Flex(
