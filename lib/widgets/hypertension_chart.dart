@@ -16,25 +16,26 @@ class HypertensionChart extends StatelessWidget {
   // ignore: missing_return
   double bpCalculation(double barWidth) {
     log(this.systolic.toString() + "/" + this.diastolic.toString());
-    // normal
-    if (((this.systolic >= 91) && (this.systolic <= 120)) ||
-        (this.diastolic >= 61) && (this.diastolic <= 80)) {
-      return (barWidth * 1) + 30;
-    } else if (((this.systolic >= 121) && (this.systolic <= 140)) &&
-        (this.diastolic >= 81) &&
-        (this.diastolic <= 90)) {
+    // hypotension
+    if ((this.systolic < 90) && (this.diastolic < 60)) {
+      return 0;
+    } else if (((this.systolic >= 91) && (this.systolic <= 120)) &&
+        (this.diastolic >= 61) &&
+        (this.diastolic <= 80)) {
+      return 1;
+    } else if (((this.systolic >= 121) && (this.systolic <= 140)) ||
+        (this.diastolic >= 81) && (this.diastolic <= 90)) {
       // prehypertension
-      return (barWidth * 2) + 30;
-    } else if (((this.systolic >= 141) || (this.systolic <= 160)) &&
-        (this.diastolic >= 91) &&
-        (this.diastolic <= 100)) {
+      return 2;
+    } else if (((this.systolic >= 141) && (this.systolic <= 160)) ||
+        (this.diastolic >= 91) && (this.diastolic <= 100)) {
       // stage 1 hypertension
-      return (barWidth * 3) + 30;
+      return 3;
     } else if ((this.systolic > 160) || (this.diastolic > 100)) {
       // stage 1 hypertension
-      return (barWidth * 4) + 30;
-    } else if ((this.systolic < 90) || (this.diastolic < 60)) {
-      return (barWidth * 0) + 30;
+      return 4;
+    } else {
+      return 0;
     }
   }
 
@@ -57,34 +58,34 @@ class HypertensionChart extends StatelessWidget {
               children: [
                 Container(
                   width: barWidth,
-                  height: 10,
+                  height: 12,
                   color: Colors.lightBlue,
                 ),
                 Container(
                   width: barWidth,
-                  height: 10,
+                  height: 12,
                   color: Colors.green,
                 ),
                 Container(
                   width: barWidth,
-                  height: 10,
+                  height: 12,
                   color: Colors.amber,
                 ),
                 Container(
                   width: barWidth,
-                  height: 10,
+                  height: 12,
                   color: Colors.orange,
                 ),
                 Container(
                   width: barWidth,
-                  height: 10,
+                  height: 12,
                   color: Colors.red,
                 ),
               ],
             ),
             // tick
             Positioned(
-              left: tick,
+              left: (barWidth * tick) + ((barWidth / 2) - 8),
               child: FaIcon(
                 FontAwesomeIcons.solidHeart,
                 size: 22,

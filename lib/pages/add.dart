@@ -63,75 +63,64 @@ class _AddPageState extends State<AddPage> {
                 direction: Axis.vertical,
                 children: [
                   // number picker
-                  Row(
+                  Flex(
+                    direction: Axis.horizontal,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: [
-                            Text("Systolic", style: kTitleBold),
-                            Text("mmHg", style: kTitleLight),
-                            SizedBox(height: 8),
-                            NumberPicker.integer(
-                              initialValue: _systolic,
-                              minValue: 20,
-                              maxValue: 200,
-                              infiniteLoop: true,
-                              onChanged: (systolic) {
-                                setState(() {
-                                  _systolic = systolic;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                      Flex(
+                        direction: Axis.vertical,
+                        children: [
+                          Text("Systolic", style: kTitleBold),
+                          Text("mmHg", style: kTitleLight),
+                          SizedBox(height: 8),
+                          NumberPicker.integer(
+                            initialValue: _systolic,
+                            minValue: 20,
+                            maxValue: 200,
+                            onChanged: (systolic) {
+                              setState(() {
+                                _systolic = systolic;
+                              });
+                            },
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: [
-                            Text("Diastolic", style: kTitleBold),
-                            Text("mmHg", style: kTitleLight),
-                            SizedBox(height: 8),
-                            NumberPicker.integer(
-                              initialValue: _diastolic,
-                              minValue: 20,
-                              maxValue: 200,
-                              infiniteLoop: true,
-                              onChanged: (diastolic) {
-                                setState(() {
-                                  _diastolic = diastolic;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                      Flex(
+                        direction: Axis.vertical,
+                        children: [
+                          Text("Diastolic", style: kTitleBold),
+                          Text("mmHg", style: kTitleLight),
+                          SizedBox(height: 8),
+                          NumberPicker.integer(
+                            initialValue: _diastolic,
+                            minValue: 20,
+                            maxValue: 200,
+                            onChanged: (diastolic) {
+                              setState(() {
+                                _diastolic = diastolic;
+                              });
+                            },
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Flex(
-                          direction: Axis.vertical,
-                          children: [
-                            Text("Pulse", style: kTitleBold),
-                            Text("bpm", style: kTitleLight),
-                            SizedBox(height: 8),
-                            NumberPicker.integer(
-                              initialValue: _pulse,
-                              minValue: 20,
-                              maxValue: 200,
-                              infiniteLoop: true,
-                              onChanged: (pluse) {
-                                setState(() {
-                                  _pulse = pluse;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                      Flex(
+                        direction: Axis.vertical,
+                        children: [
+                          Text("Pulse", style: kTitleBold),
+                          Text("bpm", style: kTitleLight),
+                          SizedBox(height: 8),
+                          NumberPicker.integer(
+                            initialValue: _pulse,
+                            minValue: 20,
+                            maxValue: 200,
+                            onChanged: (pluse) {
+                              setState(() {
+                                _pulse = pluse;
+                              });
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
