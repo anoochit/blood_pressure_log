@@ -7,6 +7,14 @@ class HypertensionChart extends StatelessWidget {
   final int systolic;
   final int diastolic;
 
+  static const List<String> typeList = [
+    "Hypotension",
+    "Normal",
+    "Prehypertension",
+    "Stage 1 Hypertension",
+    "Stage 2 Hypertension",
+  ];
+
   const HypertensionChart(
     this.systolic,
     this.diastolic, {
@@ -46,9 +54,9 @@ class HypertensionChart extends StatelessWidget {
     var tick = bpCalculation(barWidth);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 22.0),
+      padding: const EdgeInsets.only(bottom: 16.0),
       child: Container(
-        height: 22,
+        height: 60,
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -85,13 +93,22 @@ class HypertensionChart extends StatelessWidget {
             ),
             // tick
             Positioned(
+              top: 18,
               left: (barWidth * tick) + ((barWidth / 2) - 8),
               child: FaIcon(
                 FontAwesomeIcons.solidHeart,
                 size: 22,
                 color: Colors.pink,
               ),
-            )
+            ),
+            // label
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  typeList[tick.round()],
+                  style: TextStyle(
+                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+                ))
           ],
         ),
       ),

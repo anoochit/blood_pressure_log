@@ -158,8 +158,8 @@ class _AddPageState extends State<AddPage> {
                                 int.parse(_dateValue.split("/").elementAt(1)),
                                 int.parse(_dateValue.split("/").elementAt(0)),
                               ),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2025),
+                              firstDate: DateTime(2010),
+                              lastDate: DateTime.now(),
                               initialDatePickerMode: DatePickerMode.day,
                             ).then((value) {
                               setState(() {
