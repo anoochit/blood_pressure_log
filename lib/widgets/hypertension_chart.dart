@@ -46,7 +46,7 @@ class HypertensionChart extends StatelessWidget {
     var tick = bpCalculation(barWidth);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      padding: const EdgeInsets.only(bottom: 22.0),
       child: Container(
         height: 22,
         child: Stack(
@@ -64,7 +64,7 @@ class HypertensionChart extends StatelessWidget {
                 Container(
                   width: barWidth,
                   height: 12,
-                  color: Colors.green,
+                  color: Colors.lightGreen,
                 ),
                 Container(
                   width: barWidth,

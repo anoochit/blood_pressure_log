@@ -49,6 +49,7 @@ class _AddPageState extends State<AddPage> {
         children: [
           HypertensionChart(_systolic, _diastolic),
           Container(
+            height: (MediaQuery.of(context).size.height * 0.65),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Theme.of(context).buttonColor,
@@ -56,7 +57,6 @@ class _AddPageState extends State<AddPage> {
               ),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            height: (MediaQuery.of(context).size.height * 0.68),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Flex(
@@ -129,7 +129,7 @@ class _AddPageState extends State<AddPage> {
                   // options
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 12.0),
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.85,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -139,18 +139,43 @@ class _AddPageState extends State<AddPage> {
                             direction: Axis.horizontal,
                             children: [
                               Icon(
-                                Icons.calendar_today,
+                                Icons.today,
                                 color:
                                     Theme.of(context).textTheme.bodyText2.color,
                               ),
                               SizedBox(
-                                width: 8.0,
+                                width: 4.0,
                               ),
                               Text((_dateValue != null) ? _dateValue : "Today")
                             ],
                           ),
                           onTap: () {
                             log("open date picker");
+                            showDatePicker(
+                              context: context,
+                              initialDate: DateTime(
+                                int.parse(_dateValue.split("/").elementAt(2)),
+                                int.parse(_dateValue.split("/").elementAt(1)),
+                                int.parse(_dateValue.split("/").elementAt(0)),
+                              ),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2025),
+                              initialDatePickerMode: DatePickerMode.day,
+                            ).then((value) {
+                              setState(() {
+                                if (value != null) {
+                                  _dateValue = value.day.toString() +
+                                      "/" +
+                                      value.month.toString() +
+                                      "/" +
+                                      value.year.toString();
+                                } else {
+                                  _dateValue = DateFormat.yMd()
+                                      .format(new DateTime.now());
+                                }
+                                log(_dateValue);
+                              });
+                            });
                           },
                         ),
                         InkWell(
@@ -163,13 +188,37 @@ class _AddPageState extends State<AddPage> {
                                     Theme.of(context).textTheme.bodyText2.color,
                               ),
                               SizedBox(
-                                width: 8.0,
+                                width: 4.0,
                               ),
                               Text((_timeValue != null) ? _timeValue : "Today")
                             ],
                           ),
                           onTap: () {
                             log("open time picker");
+                            showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                              initialEntryMode: TimePickerEntryMode.dial,
+                              builder: (BuildContext context, Widget child) {
+                                return MediaQuery(
+                                  data: MediaQuery.of(context)
+                                      .copyWith(alwaysUse24HourFormat: true),
+                                  child: child,
+                                );
+                              },
+                            ).then((value) {
+                              setState(() {
+                                if (value != null) {
+                                  _timeValue = value.hour.toString() +
+                                      ":" +
+                                      value.minute.toString();
+                                } else {
+                                  _timeValue = TimeOfDay.now().hour.toString() +
+                                      ":" +
+                                      TimeOfDay.now().minute.toString();
+                                }
+                              });
+                            });
                           },
                         ),
                         InkWell(
@@ -182,7 +231,7 @@ class _AddPageState extends State<AddPage> {
                                     Theme.of(context).textTheme.bodyText2.color,
                               ),
                               SizedBox(
-                                width: 8.0,
+                                width: 4.0,
                               ),
                               Text("Tags")
                             ],
@@ -197,7 +246,7 @@ class _AddPageState extends State<AddPage> {
                   // add button
                   MaterialButton(
                     color: kButtonColorAccent,
-                    minWidth: MediaQuery.of(context).size.width * 0.8,
+                    minWidth: MediaQuery.of(context).size.width * 0.85,
                     child: Text(
                       'ADD',
                       style: TextStyle(color: Colors.white),

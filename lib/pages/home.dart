@@ -31,14 +31,16 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          AddPage(),
-          Container(),
-          Container(),
-          Container(),
-        ],
+      body: SingleChildScrollView(
+        child: IndexedStack(
+          index: _currentIndex,
+          children: [
+            AddPage(),
+            Container(),
+            Container(),
+            Container(),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: kBottomNavigationBarBackgroundColor,
@@ -53,7 +55,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             label: 'History',
-            icon: Icon(Icons.calendar_today_outlined),
+            icon: Icon(Icons.today_outlined),
           ),
           BottomNavigationBarItem(
             label: 'Stats',
