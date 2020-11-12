@@ -1,4 +1,5 @@
 import 'package:blood_pressure/pages/add.dart';
+import 'package:blood_pressure/pages/history.dart';
 import 'package:blood_pressure/style/style.dart';
 import 'package:flutter/material.dart';
 
@@ -31,16 +32,14 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: [
-            AddPage(),
-            Container(),
-            Container(),
-            Container(),
-          ],
-        ),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          AddPage(),
+          HistoryPage(),
+          Container(),
+          Container(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: kBottomNavigationBarBackgroundColor,

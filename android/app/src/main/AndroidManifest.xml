@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.redlinesoft.blood_pressure">
    <application
-        android:label="blood_pressure"
+        android:label="Blood Pressure Log"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

@@ -40,7 +40,7 @@ class HypertensionChart extends StatelessWidget {
       // stage 1 hypertension
       return 3;
     } else if ((this.systolic > 160) || (this.diastolic > 100)) {
-      // stage 1 hypertension
+      // stage 2 hypertension
       return 4;
     } else {
       return 0;
@@ -55,62 +55,64 @@ class HypertensionChart extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: Container(
-        height: 60,
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            // bar chart
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      child: Column(
+        children: [
+          Container(
+            height: 28,
+            child: Stack(
+              fit: StackFit.expand,
               children: [
-                Container(
-                  width: barWidth,
-                  height: 12,
-                  color: Colors.lightBlue,
+                // bar chart
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: barWidth,
+                      height: 12,
+                      color: Colors.lightBlue,
+                    ),
+                    Container(
+                      width: barWidth,
+                      height: 12,
+                      color: Colors.lightGreen,
+                    ),
+                    Container(
+                      width: barWidth,
+                      height: 12,
+                      color: Colors.amber,
+                    ),
+                    Container(
+                      width: barWidth,
+                      height: 12,
+                      color: Colors.orange,
+                    ),
+                    Container(
+                      width: barWidth,
+                      height: 12,
+                      color: Colors.red[600],
+                    ),
+                  ],
                 ),
-                Container(
-                  width: barWidth,
-                  height: 12,
-                  color: Colors.lightGreen,
-                ),
-                Container(
-                  width: barWidth,
-                  height: 12,
-                  color: Colors.amber,
-                ),
-                Container(
-                  width: barWidth,
-                  height: 12,
-                  color: Colors.orange,
-                ),
-                Container(
-                  width: barWidth,
-                  height: 12,
-                  color: Colors.red,
+                // tick
+                Positioned(
+                  top: 2,
+                  left: (barWidth * tick) + ((barWidth / 2) - 8),
+                  child: FaIcon(
+                    FontAwesomeIcons.solidHeart,
+                    size: 22,
+                    color: Colors.pink[300],
+                  ),
                 ),
               ],
             ),
-            // tick
-            Positioned(
-              top: 18,
-              left: (barWidth * tick) + ((barWidth / 2) - 8),
-              child: FaIcon(
-                FontAwesomeIcons.solidHeart,
-                size: 22,
-                color: Colors.pink,
-              ),
-            ),
-            // label
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Text(
-                  typeList[tick.round()],
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
-                ))
-          ],
-        ),
+          ),
+          Text(
+            typeList[tick.round()],
+            style: TextStyle(
+                fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+          ),
+        ],
       ),
     );
   }

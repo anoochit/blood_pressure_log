@@ -22,11 +22,7 @@ TextStyle kAppBarTitle = TextStyle(
 Color kPrimaryColor = Colors.indigo;
 Color kCanvasColor = Colors.white;
 
-TextTheme kTextTheme = TextTheme(
-  bodyText2: TextStyle(
-    color: Colors.grey[700],
-  ),
-);
+TextTheme kTextTheme = TextTheme(bodyText2: TextStyle(color: Colors.grey[700]));
 
 Color kBottomNavigationBarUnselectedItemColor = Colors.indigo[200];
 

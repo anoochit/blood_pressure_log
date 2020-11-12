@@ -14,4 +14,9 @@ class Bp {
 
   @HiveField(3)
   int pulse;
+
+  @HiveField(4)
+  int type;
+
+  Bp(this.dateTime, this.systolic, this.diastolic, this.pulse, this.type);
 }
