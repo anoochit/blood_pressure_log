@@ -64,8 +64,7 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
-    log(DateFormat('d/M/y').format(new DateTime.now()));
-    log(DateFormat('H:mm').format(new DateTime.now()));
+    log(DateFormat('d/M/y H:mm').format(new DateTime.now()));
     // let's make default values
     if ((_timeValue == null) || (_dateValue == null)) {
       _timeValue = DateFormat('H:mm').format(new DateTime.now());

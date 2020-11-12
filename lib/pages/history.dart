@@ -107,8 +107,7 @@ class HistoryPage extends StatelessWidget {
               ),
             ),
           ),
-          Flex(
-            direction: Axis.vertical,
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -135,22 +134,20 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: FutureBuilder(
-        future: getData(_typeFilter, _dateTime),
-        builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
-          if (snapshot.hasData) {
-            List<Bp> listItem = new List.from(snapshot.data.toList().reversed);
-            return ListView.builder(
-              itemCount: listItem.length,
-              itemBuilder: (context, index) {
-                return _buildList(context, listItem, index);
-              },
-            );
-          }
-          return Container();
-        },
-      ),
+    return FutureBuilder(
+      future: getData(_typeFilter, _dateTime),
+      builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
+        if (snapshot.hasData) {
+          List<Bp> listItem = new List.from(snapshot.data.toList().reversed);
+          return ListView.builder(
+            itemCount: listItem.length,
+            itemBuilder: (context, index) {
+              return _buildList(context, listItem, index);
+            },
+          );
+        }
+        return Container();
+      },
     );
   }
 }
