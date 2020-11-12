@@ -14,10 +14,8 @@ Color kFixedColor = Colors.blue;
 
 Color kButtonColorAccent = Colors.indigo;
 
-TextStyle kAppBarTitle = TextStyle(
-  color: kPrimaryColor,
-  fontWeight: FontWeight.w800,
-);
+TextStyle kAppBarTitle =
+    TextStyle(color: kPrimaryColor, fontWeight: FontWeight.w800);
 
 Color kPrimaryColor = Colors.indigo;
 Color kCanvasColor = Colors.white;

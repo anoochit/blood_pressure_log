@@ -65,10 +65,11 @@ class _AddPageState extends State<AddPage> {
 
   @override
   Widget build(BuildContext context) {
+    log(DateFormat('d/M/y').format(new DateTime.now()));
     // let's make default values
     if ((_timeValue == null) || (_dateValue == null)) {
       _timeValue = DateFormat.Hm().format(new DateTime.now());
-      _dateValue = DateFormat.yMd().format(new DateTime.now());
+      _dateValue = DateFormat('d/M/y').format(new DateTime.now());
     }
 
     return SingleChildScrollView(
@@ -184,7 +185,8 @@ class _AddPageState extends State<AddPage> {
                                 ],
                               ),
                               onTap: () {
-                                log("open date picker");
+                                log("open date picker" + _dateValue.toString());
+
                                 showDatePicker(
                                   context: context,
                                   //initialDate: DateTime.now(),
@@ -195,6 +197,7 @@ class _AddPageState extends State<AddPage> {
                                         _dateValue.split("/").elementAt(1)),
                                     int.parse(
                                         _dateValue.split("/").elementAt(0)),
+                                    0,
                                   ),
                                   firstDate: DateTime(2020),
                                   lastDate: DateTime(2030),
