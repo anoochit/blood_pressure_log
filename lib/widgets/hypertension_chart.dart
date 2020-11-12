@@ -25,11 +25,10 @@ class HypertensionChart extends StatelessWidget {
   double bpCalculation(double barWidth) {
     log(this.systolic.toString() + "/" + this.diastolic.toString());
     // hypotension
-    if ((this.systolic < 90) && (this.diastolic < 60)) {
+    if ((this.systolic < 90) || (this.diastolic < 60)) {
       return 0;
-    } else if (((this.systolic >= 91) && (this.systolic <= 120)) &&
-        (this.diastolic >= 61) &&
-        (this.diastolic <= 80)) {
+    } else if (((this.systolic >= 91) && (this.systolic <= 120)) ||
+        (this.diastolic >= 61) && (this.diastolic <= 80)) {
       return 1;
     } else if (((this.systolic >= 121) && (this.systolic <= 140)) ||
         (this.diastolic >= 81) && (this.diastolic <= 90)) {

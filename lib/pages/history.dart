@@ -2,18 +2,9 @@ import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/models/type_item.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 
 class HistoryPage extends StatelessWidget {
-  const HistoryPage({Key key}) : super(key: key);
-
-  // static const List<String> typeList = [
-  //   "Hypotension",
-  //   "Normal",
-  //   "Prehypertension",
-  //   "Stage 1 Hypertension",
-  //   "Stage 2 Hypertension",
-  // ];
-
   static List<TypeItem> typeList = [
     TypeItem(Colors.lightBlue, "Hypotension", "< 90", "< 60"),
     TypeItem(Colors.lightGreen, "Normal", "91-120", "61-80"),
@@ -22,28 +13,47 @@ class HistoryPage extends StatelessWidget {
     TypeItem(Colors.red[600], "Stage 2 Hypertension", "> 160", "> 100"),
   ];
 
-  Future<Iterable<Bp>> getData() async {
+  DateTime _dateTime;
+  int _typeFilter;
+
+  Future<Iterable<Bp>> getData(int filter, DateTime dateTime) async {
     // add blood pressure data
     if (Hive.isAdapterRegistered(1) == false) {
       Hive.registerAdapter(BpAdapter());
     }
     // hive open box
     Box<Bp> box = await Hive.openBox<Bp>("bloodPressure");
-    // box.clear();
-    // return box.values.where(
-    //     (datetime) => datetime.dateTime.toString().startsWith("2020-11"));
-    return box.values;
+    //box.clear();
+    // let's check filter value
+    if (_dateTime == null) {
+      _dateTime = DateTime.now();
+    }
+
+    // return filter value
+    if (filter != null) {
+      return box.values
+          .where((bp) => bp.dateTime
+              .toString()
+              .startsWith(DateFormat('y-M-d').format(DateTime.now())))
+          .where((bp) => bp.type == filter);
+    } else {
+      return box.values.where((bp) => bp.dateTime
+          .toString()
+          .startsWith(DateFormat('y-M-d').format(DateTime.now())));
+    }
   }
 
-  _buildList(BuildContext context, List<Bp> listItem, int index) {
+  Widget _buildList(BuildContext context, List<Bp> listItem, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).buttonColor,
-            ),
-            borderRadius: BorderRadius.circular(8.0)),
+          color: Colors.white,
+          border: Border.all(
+            color: Theme.of(context).buttonColor,
+          ),
+          borderRadius: BorderRadius.circular(8.0),
+        ),
         child: Row(children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -74,7 +84,7 @@ class HistoryPage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Divider(
-                        thickness: 1.0,
+                        thickness: 1.2,
                         color: Colors.white,
                       ),
                     ),
@@ -112,14 +122,7 @@ class HistoryPage extends StatelessWidget {
               SizedBox(
                 height: 8.0,
               ),
-              Text(listItem[index]
-                      .dateTime
-                      .toString()
-                      .replaceAll("-", "/")
-                      .split(":")
-                      .elementAt(0) +
-                  ":" +
-                  listItem[index].dateTime.toString().split(":").elementAt(1) +
+              Text(DateFormat('d/M/y H:mm').format(listItem[index].dateTime) +
                   " | " +
                   listItem[index].pulse.toString() +
                   " bpm"),
@@ -132,20 +135,22 @@ class HistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getData(),
-      builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
-        if (snapshot.hasData) {
-          List<Bp> listItem = new List.from(snapshot.data.toList().reversed);
-          return ListView.builder(
-            itemCount: listItem.length,
-            itemBuilder: (context, index) {
-              return _buildList(context, listItem, index);
-            },
-          );
-        }
-        return Container();
-      },
+    return Expanded(
+      child: FutureBuilder(
+        future: getData(_typeFilter, _dateTime),
+        builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
+          if (snapshot.hasData) {
+            List<Bp> listItem = new List.from(snapshot.data.toList().reversed);
+            return ListView.builder(
+              itemCount: listItem.length,
+              itemBuilder: (context, index) {
+                return _buildList(context, listItem, index);
+              },
+            );
+          }
+          return Container();
+        },
+      ),
     );
   }
 }

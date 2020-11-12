@@ -41,11 +41,10 @@ class _AddPageState extends State<AddPage> {
   int bpCalculation(int systolic, int diastolic) {
     log(_systolic.toString() + "/" + _diastolic.toString());
     // hypotension
-    if ((_systolic < 90) && (_diastolic < 60)) {
+    if ((_systolic < 90) || (_diastolic < 60)) {
       return 0;
-    } else if (((_systolic >= 91) && (_systolic <= 120)) &&
-        (_diastolic >= 61) &&
-        (_diastolic <= 80)) {
+    } else if (((_systolic >= 91) && (_systolic <= 120)) ||
+        (_diastolic >= 61) && (_diastolic <= 80)) {
       return 1;
     } else if (((_systolic >= 121) && (_systolic <= 140)) ||
         (_diastolic >= 81) && (_diastolic <= 90)) {
@@ -66,9 +65,10 @@ class _AddPageState extends State<AddPage> {
   @override
   Widget build(BuildContext context) {
     log(DateFormat('d/M/y').format(new DateTime.now()));
+    log(DateFormat('H:mm').format(new DateTime.now()));
     // let's make default values
     if ((_timeValue == null) || (_dateValue == null)) {
-      _timeValue = DateFormat.Hm().format(new DateTime.now());
+      _timeValue = DateFormat('H:mm').format(new DateTime.now());
       _dateValue = DateFormat('d/M/y').format(new DateTime.now());
     }
 
@@ -255,14 +255,12 @@ class _AddPageState extends State<AddPage> {
                                 ).then((value) {
                                   setState(() {
                                     if (value != null) {
-                                      _timeValue = value.hour.toString() +
-                                          ":" +
-                                          value.minute.toString();
+                                      _timeValue = DateFormat('H:mm').format(
+                                          DateTime(2020, 01, 01, value.hour,
+                                              value.minute));
                                     } else {
-                                      _timeValue =
-                                          TimeOfDay.now().hour.toString() +
-                                              ":" +
-                                              TimeOfDay.now().minute.toString();
+                                      _timeValue = DateFormat('H:mm')
+                                          .format(DateTime.now());
                                     }
                                   });
                                 });
