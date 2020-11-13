@@ -24,28 +24,29 @@ class HistoryPage extends StatelessWidget {
     // hive open box
     Box<Bp> box = await Hive.openBox<Bp>("bloodPressure");
     //box.clear();
+
     // let's check filter value
-    if (_dateTime == null) {
-      _dateTime = DateTime.now();
-    }
+    //if (_dateTime == null) {
+    //  _dateTime = DateTime.now();
+    //}
 
     // return filter value
     if (filter != null) {
       return box.values
           .where((bp) => bp.dateTime
               .toString()
-              .startsWith(DateFormat('y-M-d').format(DateTime.now())))
+              .startsWith(DateFormat('y-M').format(DateTime.now())))
           .where((bp) => bp.type == filter);
     } else {
       return box.values.where((bp) => bp.dateTime
           .toString()
-          .startsWith(DateFormat('y-M-d').format(DateTime.now())));
+          .startsWith(DateFormat('y-M').format(DateTime.now())));
     }
   }
 
   Widget _buildList(BuildContext context, List<Bp> listItem, int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -139,12 +140,14 @@ class HistoryPage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
         if (snapshot.hasData) {
           List<Bp> listItem = new List.from(snapshot.data.toList().reversed);
-          return ListView.builder(
-            itemCount: listItem.length,
-            itemBuilder: (context, index) {
-              return _buildList(context, listItem, index);
-            },
-          );
+          if (listItem.length > 0) {
+            return ListView.builder(
+              itemCount: listItem.length,
+              itemBuilder: (context, index) {
+                return _buildList(context, listItem, index);
+              },
+            );
+          }
         }
         return Container();
       },

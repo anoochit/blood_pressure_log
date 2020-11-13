@@ -23,13 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0 
+  cupertino_icons: ^1.0.0
   fluttertoast: ^7.1.1
   font_awesome_flutter: ^8.10.0
   hive: ^1.4.4+1
   hive_flutter: ^0.3.1
   intl: ^0.16.1
   numberpicker: ^1.2.1
+  package_info: ^0.4.3+2
 
 dev_dependencies:
   flutter_test:

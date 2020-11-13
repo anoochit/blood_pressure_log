@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
+
+class SettingPage extends StatefulWidget {
+  SettingPage({Key key}) : super(key: key);
+
+  @override
+  _SettingPageState createState() => _SettingPageState();
+}
+
+class _SettingPageState extends State<SettingPage> {
+  static List<String> menuItems = [
+    "About",
+  ];
+
+  List<IconData> menuIcon = [
+    Icons.info_outline_rounded,
+  ];
+
+  List<Color> menuColor = [
+    Colors.blue,
+    Colors.green,
+    Colors.amber,
+    Colors.orange,
+    Colors.red,
+  ];
+
+  onAction(int index, BuildContext context) {
+    switch (index) {
+      case 0:
+        PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+          String appName = packageInfo.appName;
+          String version = packageInfo.version;
+          String buildNumber = packageInfo.buildNumber;
+
+          showDialog(
+            context: context,
+            builder: (_) => new AlertDialog(
+              title: new Text("About"),
+              content: new Text(appName + " v" + version + "+" + buildNumber),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+          );
+        });
+
+        break;
+      case 1:
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: menuItems.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          leading: Icon(
+            menuIcon[index],
+            color: menuColor[index % 5],
+            size: 36,
+          ),
+          title: Text(
+            menuItems[index],
+            style: TextStyle(fontSize: 18.0),
+          ),
+          onTap: () {
+            onAction(index, context);
+          },
+        );
+      },
+    );
+  }
+}

@@ -305,8 +305,16 @@ class _AddPageState extends State<AddPage> {
                         }
                         // hive open box
                         Hive.openBox<Bp>("bloodPressure").then((box) {
-                          var _key =
-                              DateTime.now().microsecondsSinceEpoch.toString();
+                          var _key = DateTime(
+                                  int.parse(_dateValue.split("/").elementAt(2)),
+                                  int.parse(_dateValue.split("/").elementAt(1)),
+                                  int.parse(_dateValue.split("/").elementAt(0)),
+                                  int.parse(_timeValue.split(":").elementAt(0)),
+                                  int.parse(_timeValue.split(":").elementAt(1)),
+                                  int.parse(
+                                      DateFormat('ss').format(DateTime.now())))
+                              .microsecondsSinceEpoch
+                              .toString();
                           var _dateTime = DateTime(
                               int.parse(_dateValue.split("/").elementAt(2)),
                               int.parse(_dateValue.split("/").elementAt(1)),
