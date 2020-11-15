@@ -10,10 +10,14 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   static List<String> menuItems = [
+    "Backup to Google Drive",
+    "Export as CSV",
     "About",
   ];
 
   List<IconData> menuIcon = [
+    Icons.settings_backup_restore_outlined,
+    Icons.import_export_rounded,
     Icons.info_outline_rounded,
   ];
 
@@ -28,6 +32,11 @@ class _SettingPageState extends State<SettingPage> {
   onAction(int index, BuildContext context) {
     switch (index) {
       case 0:
+        break;
+      case 1:
+        break;
+
+      case 2:
         PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
           String appName = packageInfo.appName;
           String version = packageInfo.version;
@@ -50,8 +59,6 @@ class _SettingPageState extends State<SettingPage> {
           );
         });
 
-        break;
-      case 1:
         break;
     }
   }
