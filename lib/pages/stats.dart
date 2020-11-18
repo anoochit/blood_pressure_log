@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/widgets/chart_donut.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:supercharged/supercharged.dart';
 
 class StatsPage extends StatefulWidget {
   StatsPage({Key key}) : super(key: key);
@@ -23,29 +22,33 @@ class _StatsPageState extends State<StatsPage> {
     // hive open box
     Box<Bp> box = await Hive.openBox<Bp>("bloodPressure");
     //box.clear();
-    return box.values.where((bp) => bp.dateTime
-        .toString()
-        .startsWith(DateFormat('y-M').format(DateTime.now())));
+    return box.values.where(
+      (bp) => bp.dateTime.toString().startsWith(
+            DateFormat('y-M').format(DateTime.now()),
+          ),
+    );
   }
 
   Widget buildSumaryStats(List<Bp> listItem) {
-    var systolicValue = 0;
-    var diastolicValue = 0;
-    var pulseValue = 0;
+    // listItem.forEach((element) {
+    //   systolicValue = systolicValue + element.systolic;
+    //   diastolicValue = diastolicValue + element.diastolic;
+    //   pulseValue = pulseValue + element.pulse;
+    // });
 
-    listItem.forEach((element) {
-      systolicValue = systolicValue + element.systolic;
-      diastolicValue = diastolicValue + element.diastolic;
-      pulseValue = pulseValue + element.pulse;
-    });
-
-    var systolicValueAverage = (systolicValue / listItem.length);
+    var systolicValueAverage = listItem.averageBy((bp) => bp.systolic).floor();
 
     final List<BPChartData> dataSystolic = [
-      BPChartData(0, systolicValueAverage.floor(),
-          charts.ColorUtil.fromDartColor(Colors.red)),
-      BPChartData(1, 200 - systolicValueAverage.floor(),
-          charts.ColorUtil.fromDartColor(Colors.grey.shade300))
+      BPChartData(
+        0,
+        systolicValueAverage,
+        charts.ColorUtil.fromDartColor(Colors.red),
+      ),
+      BPChartData(
+        1,
+        200 - systolicValueAverage.floor(),
+        charts.ColorUtil.fromDartColor(Colors.red.shade100),
+      )
     ];
 
     var seriesDataSystolic = [
@@ -58,13 +61,20 @@ class _StatsPageState extends State<StatsPage> {
       )
     ];
 
-    var diastolicValueAverage = (diastolicValue / listItem.length);
+    var diastolicValueAverage =
+        listItem.averageBy((bp) => bp.diastolic).floor();
 
     final List<BPChartData> dataDiastolic = [
-      BPChartData(0, diastolicValueAverage.floor(),
-          charts.ColorUtil.fromDartColor(Colors.green)),
-      BPChartData(1, 200 - diastolicValueAverage.floor(),
-          charts.ColorUtil.fromDartColor(Colors.grey.shade300))
+      BPChartData(
+        0,
+        diastolicValueAverage,
+        charts.ColorUtil.fromDartColor(Colors.lightGreen),
+      ),
+      BPChartData(
+        1,
+        200 - diastolicValueAverage.floor(),
+        charts.ColorUtil.fromDartColor(Colors.lightGreen.shade100),
+      )
     ];
 
     var seriesDataDiastolic = [
@@ -77,13 +87,19 @@ class _StatsPageState extends State<StatsPage> {
       )
     ];
 
-    var pulseValueAverage = (pulseValue / listItem.length);
+    var pulseValueAverage = listItem.averageBy((bp) => bp.pulse).floor();
 
     final List<BPChartData> dataPulse = [
-      BPChartData(0, pulseValueAverage.floor(),
-          charts.ColorUtil.fromDartColor(Colors.blue)),
-      BPChartData(1, 200 - pulseValueAverage.floor(),
-          charts.ColorUtil.fromDartColor(Colors.grey.shade300))
+      BPChartData(
+        0,
+        pulseValueAverage,
+        charts.ColorUtil.fromDartColor(Colors.blue),
+      ),
+      BPChartData(
+        1,
+        200 - pulseValueAverage.floor(),
+        charts.ColorUtil.fromDartColor(Colors.blue.shade100),
+      )
     ];
 
     var seriesDataPulse = [
@@ -98,12 +114,24 @@ class _StatsPageState extends State<StatsPage> {
 
     return Row(
       children: [
-        donutChartWidget(seriesDataSystolic, systolicValueAverage.floor(),
-            Colors.red, "SYS"),
-        donutChartWidget(seriesDataDiastolic, diastolicValueAverage.floor(),
-            Colors.green, "DIA"),
         donutChartWidget(
-            seriesDataPulse, pulseValueAverage.floor(), Colors.blue, "PLS"),
+          seriesDataSystolic,
+          systolicValueAverage,
+          Colors.red,
+          "SYS",
+        ),
+        donutChartWidget(
+          seriesDataDiastolic,
+          diastolicValueAverage,
+          Colors.green,
+          "DIA",
+        ),
+        donutChartWidget(
+          seriesDataPulse,
+          pulseValueAverage,
+          Colors.blue,
+          "PLS",
+        ),
       ],
     );
   }
@@ -158,9 +186,10 @@ class _StatsPageState extends State<StatsPage> {
             if (snapshot.hasData) {
               List<Bp> listItem = new List.from(snapshot.data.toList());
               return Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 3,
-                  child: buildSumaryStats(listItem));
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width / 3,
+                child: buildSumaryStats(listItem),
+              );
             }
             return Container();
           },

@@ -73,7 +73,7 @@ class _SettingPageState extends State<SettingPage> {
             menuIcon[index],
             //color: menuColor[index % 5],
             color: Colors.indigo,
-            size: 36,
+            size: 32,
           ),
           title: Text(
             menuItems[index],

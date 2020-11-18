@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 
+// ignore: must_be_immutable
 class HistoryPage extends StatelessWidget {
   static List<TypeItem> typeList = [
     TypeItem(Colors.lightBlue, "Hypotension", "< 90", "< 60"),

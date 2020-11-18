@@ -32,6 +32,7 @@ dependencies:
   intl: ^0.16.1
   numberpicker: ^1.2.1
   package_info: ^0.4.3+2
+  supercharged: ^1.11.1
 
 dev_dependencies:
   flutter_test:
