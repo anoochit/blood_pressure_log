@@ -147,6 +147,10 @@ class HistoryPage extends StatelessWidget {
                 return _buildList(context, listItem, index);
               },
             );
+          } else {
+            return Center(
+              child: Text("No Data"),
+            );
           }
         }
         return Container();

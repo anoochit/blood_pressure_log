@@ -1,6 +1,7 @@
 import 'package:blood_pressure/pages/add.dart';
 import 'package:blood_pressure/pages/history.dart';
 import 'package:blood_pressure/pages/setting.dart';
+import 'package:blood_pressure/pages/stats.dart';
 import 'package:blood_pressure/style/style.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           AddPage(),
           HistoryPage(),
-          Container(),
+          StatsPage(),
           SettingPage(),
         ],
       ),

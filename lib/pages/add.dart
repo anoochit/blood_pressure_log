@@ -310,9 +310,7 @@ class _AddPageState extends State<AddPage> {
                                   int.parse(_dateValue.split("/").elementAt(1)),
                                   int.parse(_dateValue.split("/").elementAt(0)),
                                   int.parse(_timeValue.split(":").elementAt(0)),
-                                  int.parse(_timeValue.split(":").elementAt(1)),
-                                  int.parse(
-                                      DateFormat('ss').format(DateTime.now())))
+                                  int.parse(_timeValue.split(":").elementAt(1)))
                               .microsecondsSinceEpoch
                               .toString();
                           var _dateTime = DateTime(

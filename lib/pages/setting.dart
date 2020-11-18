@@ -22,11 +22,11 @@ class _SettingPageState extends State<SettingPage> {
   ];
 
   List<Color> menuColor = [
-    Colors.blue,
-    Colors.green,
-    Colors.amber,
-    Colors.orange,
     Colors.red,
+    Colors.orange,
+    Colors.amber,
+    Colors.green,
+    Colors.blue,
   ];
 
   onAction(int index, BuildContext context) {
@@ -71,7 +71,8 @@ class _SettingPageState extends State<SettingPage> {
         return ListTile(
           leading: Icon(
             menuIcon[index],
-            color: menuColor[index % 5],
+            //color: menuColor[index % 5],
+            color: Colors.indigo,
             size: 36,
           ),
           title: Text(
