@@ -47,7 +47,7 @@ class HistoryPage extends StatelessWidget {
 
   Widget _buildList(BuildContext context, List<Bp> listItem, int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -149,9 +149,8 @@ class HistoryPage extends StatelessWidget {
               },
             );
           } else {
-            return Center(
-              child: Text("No Data"),
-            );
+            return Container(
+                alignment: Alignment.topCenter, child: Text("No Data"));
           }
         }
         return Container();
