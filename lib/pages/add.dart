@@ -319,6 +319,7 @@ class _AddPageState extends State<AddPage> {
                               int.parse(_dateValue.split("/").elementAt(0)),
                               int.parse(_timeValue.split(":").elementAt(0)),
                               int.parse(_timeValue.split(":").elementAt(1)));
+
                           // save data
                           box
                               .put(

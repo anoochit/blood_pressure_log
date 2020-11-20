@@ -225,13 +225,11 @@ class _StatsPageState extends State<StatsPage> {
 
     for (int day = 1; day <= totalDay; day++) {
       // check data in day and calculate its average
-      String dateFormat = DateFormat('y-M-d ')
+      String dateFormat = DateFormat('y-M-dd ')
           .format(DateTime(numYear, numMonth, day))
           .toString();
 
-      log(dateFormat);
-
-      List<double> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
+      List<dynamic> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
 
       timeSeriesSystolic.add(BPChartDataInt(day, valueSysDia[0].toInt(),
           charts.ColorUtil.fromDartColor(Colors.redAccent)));
@@ -260,7 +258,7 @@ class _StatsPageState extends State<StatsPage> {
     return StackedAreaLineChart(seriesDataType, animate: true);
   }
 
-  List<double> getAverageDataFromDay(String dateString, List<Bp> listItem) {
+  List<dynamic> getAverageDataFromDay(String dateString, List<Bp> listItem) {
     List<int> listOfDiaValue = [];
     List<int> listOfSysValue = [];
 
@@ -274,9 +272,9 @@ class _StatsPageState extends State<StatsPage> {
       }
     });
 
-    log(listOfSysValue.toString());
+    log(dateString + "->" + listOfSysValue.max().toString());
 
-    return [listOfSysValue.average(), listOfDiaValue.average()];
+    return [(listOfSysValue.max()), (listOfDiaValue.max())];
   }
 
   @override
@@ -304,10 +302,11 @@ class _StatsPageState extends State<StatsPage> {
                       height: (MediaQuery.of(context).size.height / 3.2),
                       child: buildTimeseriesStats(listItem)),
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      width: MediaQuery.of(context).size.width,
-                      height: (MediaQuery.of(context).size.height / 3.2),
-                      child: buildTypeStats(listItem)),
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    width: MediaQuery.of(context).size.width,
+                    height: (MediaQuery.of(context).size.height / 3.2),
+                    child: buildTypeStats(listItem),
+                  ),
                 ],
               );
             } else {
