@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/widgets/donutpiechart.dart';
 import 'package:blood_pressure/widgets/simplebarchart.dart';
+import 'package:blood_pressure/widgets/stackedarealinechart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:supercharged/supercharged.dart';
+import 'package:date_util/date_util.dart';
 
 class StatsPage extends StatefulWidget {
   StatsPage({Key key}) : super(key: key);
@@ -207,6 +211,69 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
+  Widget buildTimeseriesStats(List<Bp> listItem) {
+    // get days in month
+    var dateUtility = new DateUtil();
+    var numMonth = DateFormat('M').format(DateTime.now()).toInt();
+    var numYear = DateFormat('y').format(DateTime.now()).toInt();
+
+    // current day
+    //var totalDay = dateUtility.daysInMonth(numMonth, numYear);
+    var totalDay = DateFormat('d').format(DateTime.now()).toInt();
+
+    // list all data in hive
+    List<BPChartDataInt> timeSeriesSystolic = [];
+    List<BPChartDataInt> timeSeriesDiastolic = [];
+
+    for (int day = 1; day <= totalDay; day++) {
+      // check data in day and calculate its average
+      String dateFormat = DateFormat('y-M-d')
+          .format(DateTime(numYear, numMonth, day))
+          .toString();
+      List<double> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
+
+      timeSeriesSystolic.add(BPChartDataInt(day, valueSysDia[0].toInt(),
+          charts.ColorUtil.fromDartColor(Colors.red)));
+
+      timeSeriesDiastolic.add(BPChartDataInt(day, valueSysDia[1].toInt(),
+          charts.ColorUtil.fromDartColor(Colors.lightGreen)));
+    }
+
+    List<charts.Series<BPChartDataInt, int>> seriesDataType = [
+      new charts.Series<BPChartDataInt, int>(
+        id: 'Sys',
+        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
+        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
+        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
+        data: timeSeriesSystolic,
+      ),
+      new charts.Series<BPChartDataInt, int>(
+        id: 'Dia',
+        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
+        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
+        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
+        data: timeSeriesDiastolic,
+      )
+    ];
+
+    return StackedAreaLineChart(seriesDataType, animate: true);
+  }
+
+  List<double> getAverageDataFromDay(String dateString, List<Bp> listItem) {
+    List<int> listOfDiaValue = [];
+    List<int> listOfSysValue = [];
+    listItem.forEach((element) {
+      if (element.dateTime.toString().startsWith(dateString)) {
+        listOfSysValue.add(element.systolic);
+        listOfDiaValue.add(element.diastolic);
+      } else {
+        listOfSysValue.add(0);
+        listOfDiaValue.add(0);
+      }
+    });
+    return [listOfSysValue.average(), listOfDiaValue.average()];
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -222,9 +289,14 @@ class _StatsPageState extends State<StatsPage> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 3.3,
+                  height: MediaQuery.of(context).size.width / 3,
                   child: buildSumaryStats(listItem),
                 ),
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    width: MediaQuery.of(context).size.width,
+                    height: (MediaQuery.of(context).size.width / 3.3) * 2,
+                    child: buildTimeseriesStats(listItem)),
                 Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     width: MediaQuery.of(context).size.width,
@@ -249,4 +321,12 @@ class BPChartData {
   final charts.Color color;
 
   BPChartData(this.id, this.value, this.color);
+}
+
+class BPChartDataInt {
+  final int id;
+  final int value;
+  final charts.Color color;
+
+  BPChartDataInt(this.id, this.value, this.color);
 }
