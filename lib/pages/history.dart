@@ -36,12 +36,12 @@ class HistoryPage extends StatelessWidget {
       return box.values
           .where((bp) => bp.dateTime
               .toString()
-              .startsWith(DateFormat('y-M').format(DateTime.now())))
+              .startsWith(DateFormat('y-M-').format(DateTime.now())))
           .where((bp) => bp.type == filter);
     } else {
       return box.values.where((bp) => bp.dateTime
           .toString()
-          .startsWith(DateFormat('y-M').format(DateTime.now())));
+          .startsWith(DateFormat('y-M-').format(DateTime.now())));
     }
   }
 

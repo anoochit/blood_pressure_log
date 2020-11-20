@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/widgets/donutpiechart.dart';
 import 'package:blood_pressure/widgets/simplebarchart.dart';
@@ -26,7 +28,7 @@ class _StatsPageState extends State<StatsPage> {
     //box.clear();
     return box.values.where(
       (bp) => bp.dateTime.toString().startsWith(
-            DateFormat('y-M').format(DateTime.now()),
+            DateFormat('y-M-').format(DateTime.now()),
           ),
     );
   }
@@ -223,13 +225,16 @@ class _StatsPageState extends State<StatsPage> {
 
     for (int day = 1; day <= totalDay; day++) {
       // check data in day and calculate its average
-      String dateFormat = DateFormat('y-M-d')
+      String dateFormat = DateFormat('y-M-d ')
           .format(DateTime(numYear, numMonth, day))
           .toString();
+
+      log(dateFormat);
+
       List<double> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
 
       timeSeriesSystolic.add(BPChartDataInt(day, valueSysDia[0].toInt(),
-          charts.ColorUtil.fromDartColor(Colors.red)));
+          charts.ColorUtil.fromDartColor(Colors.redAccent)));
 
       timeSeriesDiastolic.add(BPChartDataInt(day, valueSysDia[1].toInt(),
           charts.ColorUtil.fromDartColor(Colors.lightGreen)));
@@ -237,19 +242,19 @@ class _StatsPageState extends State<StatsPage> {
 
     List<charts.Series<BPChartDataInt, int>> seriesDataType = [
       new charts.Series<BPChartDataInt, int>(
+        id: 'Dia',
+        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
+        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
+        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
+        data: timeSeriesDiastolic,
+      ),
+      new charts.Series<BPChartDataInt, int>(
         id: 'Sys',
         domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
         measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
         colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
         data: timeSeriesSystolic,
       ),
-      new charts.Series<BPChartDataInt, int>(
-        id: 'Dia',
-        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
-        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
-        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
-        data: timeSeriesDiastolic,
-      )
     ];
 
     return StackedAreaLineChart(seriesDataType, animate: true);
@@ -258,6 +263,7 @@ class _StatsPageState extends State<StatsPage> {
   List<double> getAverageDataFromDay(String dateString, List<Bp> listItem) {
     List<int> listOfDiaValue = [];
     List<int> listOfSysValue = [];
+
     listItem.forEach((element) {
       if (element.dateTime.toString().startsWith(dateString)) {
         listOfSysValue.add(element.systolic);
@@ -267,46 +273,51 @@ class _StatsPageState extends State<StatsPage> {
         listOfDiaValue.add(0);
       }
     });
+
+    log(listOfSysValue.toString());
+
     return [listOfSysValue.average(), listOfDiaValue.average()];
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getMonthData(),
-      builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data.length != 0) {
-            List<Bp> listItem = new List.from(snapshot.data.toList());
-            return Flex(
-              direction: Axis.vertical,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.width / 3,
-                  child: buildSumaryStats(listItem),
-                ),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+    return SingleChildScrollView(
+      child: FutureBuilder(
+        future: getMonthData(),
+        builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data.length != 0) {
+              List<Bp> listItem = new List.from(snapshot.data.toList());
+              return Flex(
+                direction: Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
                     width: MediaQuery.of(context).size.width,
-                    height: (MediaQuery.of(context).size.width / 3.3) * 2,
-                    child: buildTimeseriesStats(listItem)),
-                Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    width: MediaQuery.of(context).size.width,
-                    height: (MediaQuery.of(context).size.width / 3.3) * 2,
-                    child: buildTypeStats(listItem)),
-              ],
-            );
-          } else {
-            return Container(
-                alignment: Alignment.topCenter, child: Text("No Data"));
+                    height: MediaQuery.of(context).size.width / 3,
+                    child: buildSumaryStats(listItem),
+                  ),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      width: MediaQuery.of(context).size.width,
+                      height: (MediaQuery.of(context).size.height / 3.2),
+                      child: buildTimeseriesStats(listItem)),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      width: MediaQuery.of(context).size.width,
+                      height: (MediaQuery.of(context).size.height / 3.2),
+                      child: buildTypeStats(listItem)),
+                ],
+              );
+            } else {
+              return Container(
+                  alignment: Alignment.topCenter, child: Text("No Data"));
+            }
           }
-        }
-        return Container();
-      },
+          return Container();
+        },
+      ),
     );
   }
 }
