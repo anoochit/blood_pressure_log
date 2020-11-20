@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/widgets/donutpiechart.dart';
 import 'package:blood_pressure/widgets/simplebarchart.dart';
@@ -9,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:supercharged/supercharged.dart';
-import 'package:date_util/date_util.dart';
 
 class StatsPage extends StatefulWidget {
   StatsPage({Key key}) : super(key: key);
@@ -213,7 +210,6 @@ class _StatsPageState extends State<StatsPage> {
 
   Widget buildTimeseriesStats(List<Bp> listItem) {
     // get days in month
-    var dateUtility = new DateUtil();
     var numMonth = DateFormat('M').format(DateTime.now()).toInt();
     var numYear = DateFormat('y').format(DateTime.now()).toInt();
 
