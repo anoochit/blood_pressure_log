@@ -19,3 +19,9 @@ Statistic
 Settings
 
 <img src="https://raw.githubusercontent.com/anoochit/blood_pressure_log/master/screenshot/screenshot04.png" width="250">
+
+## Todos
+
+- [ ] Stats in weekly, monthly 
+- [ ] History in weekly, monthly 
+- [ ] Backup to Google Drive

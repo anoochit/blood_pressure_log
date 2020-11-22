@@ -46,7 +46,7 @@ class _StatsPageState extends State<StatsPage> {
 
     var seriesDataSystolic = [
       new charts.Series<BPChartData, dynamic>(
-        id: 'Sales',
+        id: 'BloodPressure',
         domainFn: (BPChartData bpChartData, _) => bpChartData.id,
         measureFn: (BPChartData bpChartData, _) => bpChartData.value,
         colorFn: (BPChartData bpChartData, _) => bpChartData.color,
@@ -67,7 +67,7 @@ class _StatsPageState extends State<StatsPage> {
 
     var seriesDataDiastolic = [
       new charts.Series<BPChartData, dynamic>(
-        id: 'Sales',
+        id: 'BloodPressure',
         domainFn: (BPChartData bpChartData, _) => bpChartData.id,
         measureFn: (BPChartData bpChartData, _) => bpChartData.value,
         colorFn: (BPChartData bpChartData, _) => bpChartData.color,
@@ -87,7 +87,7 @@ class _StatsPageState extends State<StatsPage> {
 
     var seriesDataPulse = [
       new charts.Series<BPChartData, dynamic>(
-        id: 'Sales',
+        id: 'BloodPressure',
         domainFn: (BPChartData bpChartData, _) => bpChartData.id,
         measureFn: (BPChartData bpChartData, _) => bpChartData.value,
         colorFn: (BPChartData bpChartData, _) => bpChartData.color,
@@ -187,13 +187,13 @@ class _StatsPageState extends State<StatsPage> {
           "Normal", type1, charts.ColorUtil.fromDartColor(Colors.lightGreen)),
       BPChartData("Pre", type2, charts.ColorUtil.fromDartColor(Colors.amber)),
       BPChartData(
-          "State1", type3, charts.ColorUtil.fromDartColor(Colors.orange)),
-      BPChartData("State2", type4, charts.ColorUtil.fromDartColor(Colors.red))
+          "Stage1", type3, charts.ColorUtil.fromDartColor(Colors.orange)),
+      BPChartData("Stage2", type4, charts.ColorUtil.fromDartColor(Colors.red))
     ];
 
     var seriesDataType = [
       new charts.Series<BPChartData, String>(
-        id: 'Sales',
+        id: 'BloodPressure',
         domainFn: (BPChartData bpChartData, _) => bpChartData.id.toString(),
         measureFn: (BPChartData bpChartData, _) => bpChartData.value,
         colorFn: (BPChartData bpChartData, _) => bpChartData.color,
