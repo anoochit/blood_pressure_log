@@ -277,6 +277,8 @@ class _StatsPageState extends State<StatsPage> {
     return [(listOfSysValue.max()), (listOfDiaValue.max())];
   }
 
+  // TODO : implement filter for previous statistics
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

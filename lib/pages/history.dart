@@ -134,6 +134,8 @@ class HistoryPage extends StatelessWidget {
     );
   }
 
+  // TODO : implement filter for previous history data
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

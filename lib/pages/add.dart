@@ -284,6 +284,7 @@ class _AddPageState extends State<AddPage> {
                               ),
                               onTap: () {
                                 log("open tag dialog");
+                                // TODO : implement tag dialog
                               },
                             )
                           ],
