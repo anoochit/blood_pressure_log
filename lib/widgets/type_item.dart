@@ -5,9 +5,17 @@ class TypeItemWidget extends StatelessWidget {
   final String text;
   final String sysval;
   final String diaval;
+  final int bold;
+  final int index;
 
   const TypeItemWidget(
-      {Key key, this.color, this.text, this.sysval, this.diaval})
+      {Key key,
+      this.color,
+      this.text,
+      this.sysval,
+      this.diaval,
+      this.bold,
+      this.index})
       : super(key: key);
 
   @override
@@ -32,7 +40,14 @@ class TypeItemWidget extends StatelessWidget {
                 ),
                 Container(
                     width: MediaQuery.of(context).size.width * 0.5 - 28,
-                    child: Center(child: Text(this.text))),
+                    child: Center(
+                        child: Text(
+                      this.text,
+                      style: TextStyle(
+                          fontWeight: (bold == (4 - index))
+                              ? FontWeight.bold
+                              : FontWeight.normal),
+                    ))),
               ],
             ),
           ),

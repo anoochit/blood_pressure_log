@@ -73,7 +73,7 @@ class _AddPageState extends State<AddPage> {
           children: [
             HypertensionChart(_systolic, _diastolic),
             Container(
-              height: (MediaQuery.of(context).size.height * 0.66),
+              height: (MediaQuery.of(context).size.height - 300),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Theme.of(context).buttonColor,
@@ -372,11 +372,12 @@ class _AddPageState extends State<AddPage> {
                     // table rows
                     for (int index = 0; index < typeList.length; index++)
                       TypeItemWidget(
-                        color: typeList[index].color,
-                        text: typeList[index].title,
-                        sysval: typeList[index].sysval,
-                        diaval: typeList[index].diaval,
-                      )
+                          color: typeList[index].color,
+                          text: typeList[index].title,
+                          sysval: typeList[index].sysval,
+                          diaval: typeList[index].diaval,
+                          bold: bpCalculation(_systolic, _diastolic),
+                          index: index)
                   ],
                 ),
               ),

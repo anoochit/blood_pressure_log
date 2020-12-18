@@ -33,10 +33,11 @@ dependencies:
   hive_flutter: ^0.3.1
   intl: ^0.16.1
   numberpicker: ^1.2.1
-  open_file: ^3.0.3
+  #open_file: ^3.0.3
   package_info: ^0.4.3+2
   path_provider: ^1.6.24
-  supercharged: ^1.11.1 
+  share: ^0.6.5+4
+  supercharged: ^1.11.1
 
 dev_dependencies:
   flutter_test:

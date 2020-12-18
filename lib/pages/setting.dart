@@ -6,9 +6,9 @@ import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
-import 'package:open_file/open_file.dart';
 import 'package:package_info/package_info.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 
 class SettingPage extends StatefulWidget {
   SettingPage({Key key}) : super(key: key);
@@ -19,7 +19,6 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   static List<String> menuItems = [
-    "Backup to Google Drive",
     "Export as CSV",
     "About",
   ];
@@ -41,13 +40,10 @@ class _SettingPageState extends State<SettingPage> {
   onAction(int index, BuildContext context) {
     switch (index) {
       case 0:
-        // TODO : implement save to google drive
-        break;
-      case 1:
         exportAsCSV();
         break;
 
-      case 2:
+      case 1:
         showAbout();
         break;
     }
@@ -101,8 +97,11 @@ class _SettingPageState extends State<SettingPage> {
 
     log(filePath);
 
-    final message = await OpenFile.open(filePath);
-    log(message.message.toString());
+    //final message = await OpenFile.open(filePath);
+    //log(message.message.toString());
+
+    //open share dialog
+    Share.shareFiles([filePath]);
   }
 
   showAbout() {
