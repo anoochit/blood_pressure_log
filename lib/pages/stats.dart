@@ -35,12 +35,12 @@ class _StatsPageState extends State<StatsPage> {
 
   Widget buildSumaryStats(List<Bp> listItem) {
     // systolic value
-    var systolicValueAverage = listItem.averageBy((bp) => bp.systolic).floor();
+    var systolicValueAverage = listItem.averageBy((bp) => bp.systolic);
 
     final List<BPChartData> dataSystolic = [
       BPChartData("0", systolicValueAverage,
           charts.ColorUtil.fromDartColor(Colors.red)),
-      BPChartData("1", 200 - systolicValueAverage.floor(),
+      BPChartData("1", 200 - systolicValueAverage,
           charts.ColorUtil.fromDartColor(Colors.red.shade100))
     ];
 
@@ -55,13 +55,12 @@ class _StatsPageState extends State<StatsPage> {
     ];
 
     // diastolic value
-    var diastolicValueAverage =
-        listItem.averageBy((bp) => bp.diastolic).floor();
+    var diastolicValueAverage = listItem.averageBy((bp) => bp.diastolic);
 
     final List<BPChartData> dataDiastolic = [
       BPChartData("0", diastolicValueAverage,
           charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-      BPChartData("1", 200 - diastolicValueAverage.floor(),
+      BPChartData("1", 200 - diastolicValueAverage,
           charts.ColorUtil.fromDartColor(Colors.lightGreen.shade100))
     ];
 
@@ -76,12 +75,12 @@ class _StatsPageState extends State<StatsPage> {
     ];
 
     // pulse value
-    var pulseValueAverage = listItem.averageBy((bp) => bp.pulse).floor();
+    var pulseValueAverage = listItem.averageBy((bp) => bp.pulse);
 
     final List<BPChartData> dataPulse = [
       BPChartData("0", pulseValueAverage,
           charts.ColorUtil.fromDartColor(Colors.lightBlue)),
-      BPChartData("1", 200 - pulseValueAverage.floor(),
+      BPChartData("1", 200 - pulseValueAverage,
           charts.ColorUtil.fromDartColor(Colors.blue.shade100))
     ];
 
@@ -100,19 +99,19 @@ class _StatsPageState extends State<StatsPage> {
       children: [
         donutChartWidget(
           seriesDataSystolic,
-          systolicValueAverage,
+          systolicValueAverage.floor(),
           Colors.red,
           "SYS",
         ),
         donutChartWidget(
           seriesDataDiastolic,
-          diastolicValueAverage,
+          diastolicValueAverage.floor(),
           Colors.green,
           "DIA",
         ),
         donutChartWidget(
           seriesDataPulse,
-          pulseValueAverage,
+          pulseValueAverage.floor(),
           Colors.blue,
           "PUL",
         ),
@@ -168,11 +167,11 @@ class _StatsPageState extends State<StatsPage> {
   Widget buildTypeStats(List<Bp> listItem) {
     var total = listItem.length;
 
-    var type0 = ((listItem.count((n) => n.type == 0) / total) * 100).toInt();
-    var type1 = ((listItem.count((n) => n.type == 1) / total) * 100).toInt();
-    var type2 = ((listItem.count((n) => n.type == 2) / total) * 100).toInt();
-    var type3 = ((listItem.count((n) => n.type == 3) / total) * 100).toInt();
-    var type4 = ((listItem.count((n) => n.type == 4) / total) * 100).toInt();
+    var type0 = ((listItem.count((n) => n.type == 0) / total) * 100);
+    var type1 = ((listItem.count((n) => n.type == 1) / total) * 100);
+    var type2 = ((listItem.count((n) => n.type == 2) / total) * 100);
+    var type3 = ((listItem.count((n) => n.type == 3) / total) * 100);
+    var type4 = ((listItem.count((n) => n.type == 4) / total) * 100);
 
     // var type0 = (listItem.count((n) => n.type == 0));
     // var type1 = (listItem.count((n) => n.type == 1));
@@ -199,7 +198,7 @@ class _StatsPageState extends State<StatsPage> {
         colorFn: (BPChartData bpChartData, _) => bpChartData.color,
         data: dataType,
         labelAccessorFn: (BPChartData bpChartData, _) =>
-            '${bpChartData.value.toString()}\%',
+            '${bpChartData.value.toStringAsFixed(1)}\%',
       )
     ];
 
@@ -325,7 +324,7 @@ class _StatsPageState extends State<StatsPage> {
 
 class BPChartData {
   final String id;
-  final int value;
+  final double value;
   final charts.Color color;
 
   BPChartData(this.id, this.value, this.color);
