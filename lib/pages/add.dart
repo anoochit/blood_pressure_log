@@ -40,25 +40,20 @@ class _AddPageState extends State<AddPage> {
 
   int bpCalculation(int systolic, int diastolic) {
     log(_systolic.toString() + "/" + _diastolic.toString());
-    // hypotension
-    if ((_systolic < 90) || (_diastolic < 60)) {
+    if ((_systolic <= 90) && (_diastolic <= 60)) {
+      log("status -> 0");
       return 0;
-    } else if (((_systolic >= 91) && (_systolic <= 120)) ||
-        (_diastolic >= 61) && (_diastolic <= 80)) {
+    } else if ((_systolic <= 120) && (_diastolic <= 80)) {
+      log("status -> 1");
       return 1;
-    } else if (((_systolic >= 121) && (_systolic <= 140)) ||
-        (_diastolic >= 81) && (_diastolic <= 90)) {
-      // prehypertension
+    } else if ((_systolic <= 140) && (_diastolic <= 90)) {
+      log("status -> 2");
       return 2;
-    } else if (((_systolic >= 141) && (_systolic <= 160)) ||
-        (_diastolic >= 91) && (_diastolic <= 100)) {
-      // stage 1 hypertension
+    } else if ((_systolic <= 160) && (_diastolic <= 100)) {
+      log("status -> 3");
       return 3;
-    } else if ((_systolic > 160) || (_diastolic > 100)) {
-      // stage 2 hypertension
-      return 4;
     } else {
-      return 0;
+      return 4;
     }
   }
 

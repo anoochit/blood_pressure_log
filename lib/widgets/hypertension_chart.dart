@@ -21,28 +21,22 @@ class HypertensionChart extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  // ignore: missing_return
   double bpCalculation(double barWidth) {
     log(this.systolic.toString() + "/" + this.diastolic.toString());
-    // hypotension
-    if ((this.systolic < 90) || (this.diastolic < 60)) {
+    if ((this.systolic <= 90) && (this.diastolic <= 60)) {
+      log("status -> 0");
       return 0;
-    } else if (((this.systolic >= 91) && (this.systolic <= 120)) ||
-        (this.diastolic >= 61) && (this.diastolic <= 80)) {
+    } else if ((this.systolic <= 120) && (this.diastolic <= 80)) {
+      log("status -> 1");
       return 1;
-    } else if (((this.systolic >= 121) && (this.systolic <= 140)) ||
-        (this.diastolic >= 81) && (this.diastolic <= 90)) {
-      // prehypertension
+    } else if ((this.systolic <= 140) && (this.diastolic <= 90)) {
+      log("status -> 2");
       return 2;
-    } else if (((this.systolic >= 141) && (this.systolic <= 160)) ||
-        (this.diastolic >= 91) && (this.diastolic <= 100)) {
-      // stage 1 hypertension
+    } else if ((this.systolic <= 160) && (this.diastolic <= 100)) {
+      log("status -> 3");
       return 3;
-    } else if ((this.systolic > 160) || (this.diastolic > 100)) {
-      // stage 2 hypertension
-      return 4;
     } else {
-      return 0;
+      return 4;
     }
   }
 
