@@ -302,13 +302,12 @@ class _AddPageState extends State<AddPage> {
                         // hive open box
                         Hive.openBox<Bp>("bloodPressure").then((box) {
                           var _key = DateTime(
-                                  int.parse(_dateValue.split("/").elementAt(2)),
-                                  int.parse(_dateValue.split("/").elementAt(1)),
-                                  int.parse(_dateValue.split("/").elementAt(0)),
-                                  int.parse(_timeValue.split(":").elementAt(0)),
-                                  int.parse(_timeValue.split(":").elementAt(1)))
-                              .microsecondsSinceEpoch
-                              .toString();
+                            int.parse(_dateValue.split("/").elementAt(2)),
+                            int.parse(_dateValue.split("/").elementAt(1)),
+                            int.parse(_dateValue.split("/").elementAt(0)),
+                            int.parse(_timeValue.split(":").elementAt(0)),
+                            int.parse(_timeValue.split(":").elementAt(1)),
+                          ).microsecondsSinceEpoch.toString();
                           var _dateTime = DateTime(
                               int.parse(_dateValue.split("/").elementAt(2)),
                               int.parse(_dateValue.split("/").elementAt(1)),
@@ -317,6 +316,16 @@ class _AddPageState extends State<AddPage> {
                               int.parse(_timeValue.split(":").elementAt(1)));
 
                           // save data
+                          log('save -> ' +
+                              _key +
+                              ' data -> ' +
+                              _dateTime.toString() +
+                              ', ' +
+                              _systolic.toString() +
+                              ', ' +
+                              _diastolic.toString() +
+                              ', ' +
+                              _pulse.toString());
                           box
                               .put(
                                   _key,
