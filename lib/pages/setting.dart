@@ -63,32 +63,17 @@ class _SettingPageState extends State<SettingPage> {
 
     box.values.forEach((element) {
       //log(element.dateTime.toString());
-      bpDocument.add(<String>[
-        element.dateTime.toString(),
-        element.systolic.toString(),
-        element.diastolic.toString(),
-        element.pulse.toString(),
-        element.type.toString()
-      ]);
+      bpDocument.add(<String>[element.dateTime.toString(), element.systolic.toString(), element.diastolic.toString(), element.pulse.toString(), element.type.toString()]);
     });
 
-    String csv = const ListToCsvConverter(
-            fieldDelimiter: ',',
-            eol: '\n',
-            textDelimiter: '"',
-            textEndDelimiter: '"')
-        .convert(bpDocument);
+    String csv = const ListToCsvConverter(fieldDelimiter: ',', eol: '\n', textDelimiter: '"', textEndDelimiter: '"').convert(bpDocument);
 
     // get application directory
     //Directory appDocDir = await getApplicationDocumentsDirectory();
     Directory appDocDir = await getExternalStorageDirectory();
     String appDocPath = appDocDir.path;
 
-    String filePath = appDocPath +
-        "/" +
-        DateFormat('yMMdd').format(DateTime.now()).toString() +
-        "_export" +
-        ".csv";
+    String filePath = appDocPath + "/" + DateFormat('yMMdd').format(DateTime.now()).toString() + "_export" + ".csv";
 
     final File file = File(filePath);
     await file.writeAsString(csv);
@@ -116,7 +101,7 @@ class _SettingPageState extends State<SettingPage> {
           title: new Text("About"),
           content: new Text(appName + " v" + version + "+" + buildNumber),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();

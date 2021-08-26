@@ -1,6 +1,4 @@
 import 'dart:developer';
-import 'dart:ui';
-
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/models/type_item.dart';
 import 'package:blood_pressure/style/style.dart';
@@ -98,8 +96,8 @@ class _AddPageState extends State<AddPage> {
                             Text("Systolic", style: kTitleBold),
                             Text("mmHg", style: kTitleLight),
                             SizedBox(height: 8),
-                            NumberPicker.integer(
-                              initialValue: _systolic,
+                            NumberPicker(
+                              value: _systolic,
                               minValue: 20,
                               maxValue: 200,
                               onChanged: (systolic) {
@@ -116,8 +114,8 @@ class _AddPageState extends State<AddPage> {
                             Text("Diastolic", style: kTitleBold),
                             Text("mmHg", style: kTitleLight),
                             SizedBox(height: 8),
-                            NumberPicker.integer(
-                              initialValue: _diastolic,
+                            NumberPicker(
+                              value: _diastolic,
                               minValue: 20,
                               maxValue: 200,
                               onChanged: (diastolic) {
@@ -134,8 +132,8 @@ class _AddPageState extends State<AddPage> {
                             Text("Pulse", style: kTitleBold),
                             Text("bpm", style: kTitleLight),
                             SizedBox(height: 8),
-                            NumberPicker.integer(
-                              initialValue: _pulse,
+                            NumberPicker(
+                              value: _pulse,
                               minValue: 20,
                               maxValue: 200,
                               onChanged: (pluse) {
@@ -165,17 +163,12 @@ class _AddPageState extends State<AddPage> {
                                 children: [
                                   Icon(
                                     Icons.today,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .color,
+                                    color: Theme.of(context).textTheme.bodyText2.color,
                                   ),
                                   SizedBox(
                                     width: 4.0,
                                   ),
-                                  Text((_dateValue != null)
-                                      ? _dateValue
-                                      : "Today")
+                                  Text((_dateValue != null) ? _dateValue : "Today")
                                 ],
                               ),
                               onTap: () {
@@ -185,12 +178,9 @@ class _AddPageState extends State<AddPage> {
                                   context: context,
                                   //initialDate: DateTime.now(),
                                   initialDate: DateTime(
-                                    int.parse(
-                                        _dateValue.split("/").elementAt(2)),
-                                    int.parse(
-                                        _dateValue.split("/").elementAt(1)),
-                                    int.parse(
-                                        _dateValue.split("/").elementAt(0)),
+                                    int.parse(_dateValue.split("/").elementAt(2)),
+                                    int.parse(_dateValue.split("/").elementAt(1)),
+                                    int.parse(_dateValue.split("/").elementAt(0)),
                                     0,
                                   ),
                                   firstDate: DateTime(2020),
@@ -199,14 +189,9 @@ class _AddPageState extends State<AddPage> {
                                 ).then((value) {
                                   setState(() {
                                     if (value != null) {
-                                      _dateValue = value.day.toString() +
-                                          "/" +
-                                          value.month.toString() +
-                                          "/" +
-                                          value.year.toString();
+                                      _dateValue = value.day.toString() + "/" + value.month.toString() + "/" + value.year.toString();
                                     } else {
-                                      _dateValue = DateFormat.yMd()
-                                          .format(new DateTime.now());
+                                      _dateValue = DateFormat.yMd().format(new DateTime.now());
                                     }
                                     log(_dateValue);
                                   });
@@ -219,17 +204,12 @@ class _AddPageState extends State<AddPage> {
                                 children: [
                                   Icon(
                                     Icons.watch_later_outlined,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .color,
+                                    color: Theme.of(context).textTheme.bodyText2.color,
                                   ),
                                   SizedBox(
                                     width: 4.0,
                                   ),
-                                  Text((_timeValue != null)
-                                      ? _timeValue
-                                      : "Today")
+                                  Text((_timeValue != null) ? _timeValue : "Today")
                                 ],
                               ),
                               onTap: () {
@@ -238,23 +218,18 @@ class _AddPageState extends State<AddPage> {
                                   context: context,
                                   initialTime: TimeOfDay.now(),
                                   initialEntryMode: TimePickerEntryMode.dial,
-                                  builder:
-                                      (BuildContext context, Widget child) {
+                                  builder: (BuildContext context, Widget child) {
                                     return MediaQuery(
-                                      data: MediaQuery.of(context).copyWith(
-                                          alwaysUse24HourFormat: true),
+                                      data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
                                       child: child,
                                     );
                                   },
                                 ).then((value) {
                                   setState(() {
                                     if (value != null) {
-                                      _timeValue = DateFormat('H:mm').format(
-                                          DateTime(2020, 01, 01, value.hour,
-                                              value.minute));
+                                      _timeValue = DateFormat('H:mm').format(DateTime(2020, 01, 01, value.hour, value.minute));
                                     } else {
-                                      _timeValue = DateFormat('H:mm')
-                                          .format(DateTime.now());
+                                      _timeValue = DateFormat('H:mm').format(DateTime.now());
                                     }
                                   });
                                 });
@@ -266,10 +241,7 @@ class _AddPageState extends State<AddPage> {
                                 children: [
                                   Icon(
                                     Icons.label_outline,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2
-                                        .color,
+                                    color: Theme.of(context).textTheme.bodyText2.color,
                                   ),
                                   SizedBox(
                                     width: 4.0,
@@ -308,30 +280,12 @@ class _AddPageState extends State<AddPage> {
                             int.parse(_timeValue.split(":").elementAt(0)),
                             int.parse(_timeValue.split(":").elementAt(1)),
                           ).microsecondsSinceEpoch.toString();
-                          var _dateTime = DateTime(
-                              int.parse(_dateValue.split("/").elementAt(2)),
-                              int.parse(_dateValue.split("/").elementAt(1)),
-                              int.parse(_dateValue.split("/").elementAt(0)),
-                              int.parse(_timeValue.split(":").elementAt(0)),
-                              int.parse(_timeValue.split(":").elementAt(1)));
+                          var _dateTime = DateTime(int.parse(_dateValue.split("/").elementAt(2)), int.parse(_dateValue.split("/").elementAt(1)), int.parse(_dateValue.split("/").elementAt(0)),
+                              int.parse(_timeValue.split(":").elementAt(0)), int.parse(_timeValue.split(":").elementAt(1)));
 
                           // save data
-                          log('save -> ' +
-                              _key +
-                              ' data -> ' +
-                              _dateTime.toString() +
-                              ', ' +
-                              _systolic.toString() +
-                              ', ' +
-                              _diastolic.toString() +
-                              ', ' +
-                              _pulse.toString());
-                          box
-                              .put(
-                                  _key,
-                                  Bp(_dateTime, _systolic, _diastolic, _pulse,
-                                      bpCalculation(_systolic, _diastolic)))
-                              .then((value) {
+                          log('save -> ' + _key + ' data -> ' + _dateTime.toString() + ', ' + _systolic.toString() + ', ' + _diastolic.toString() + ', ' + _pulse.toString());
+                          box.put(_key, Bp(_dateTime, _systolic, _diastolic, _pulse, bpCalculation(_systolic, _diastolic))).then((value) {
                             Fluttertoast.showToast(
                               msg: "Added",
                               toastLength: Toast.LENGTH_SHORT,
