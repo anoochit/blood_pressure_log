@@ -28,7 +28,7 @@ class _StatsPageState extends State<StatsPage> {
     //box.clear();
     return box.values.where(
       (bp) => bp.dateTime.toString().startsWith(
-            DateFormat('y-M-').format(DateTime.now()),
+            DateFormat('y-MM-').format(DateTime.now()),
           ),
     );
   }
@@ -38,10 +38,8 @@ class _StatsPageState extends State<StatsPage> {
     var systolicValueAverage = listItem.averageBy((bp) => bp.systolic);
 
     final List<BPChartData> dataSystolic = [
-      BPChartData("0", systolicValueAverage,
-          charts.ColorUtil.fromDartColor(Colors.red)),
-      BPChartData("1", 200 - systolicValueAverage,
-          charts.ColorUtil.fromDartColor(Colors.red.shade100))
+      BPChartData("0", systolicValueAverage, charts.ColorUtil.fromDartColor(Colors.red)),
+      BPChartData("1", 200 - systolicValueAverage, charts.ColorUtil.fromDartColor(Colors.red.shade100))
     ];
 
     var seriesDataSystolic = [
@@ -58,10 +56,8 @@ class _StatsPageState extends State<StatsPage> {
     var diastolicValueAverage = listItem.averageBy((bp) => bp.diastolic);
 
     final List<BPChartData> dataDiastolic = [
-      BPChartData("0", diastolicValueAverage,
-          charts.ColorUtil.fromDartColor(Colors.lightGreen)),
-      BPChartData("1", 200 - diastolicValueAverage,
-          charts.ColorUtil.fromDartColor(Colors.lightGreen.shade100))
+      BPChartData("0", diastolicValueAverage, charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+      BPChartData("1", 200 - diastolicValueAverage, charts.ColorUtil.fromDartColor(Colors.lightGreen.shade100))
     ];
 
     var seriesDataDiastolic = [
@@ -78,10 +74,8 @@ class _StatsPageState extends State<StatsPage> {
     var pulseValueAverage = listItem.averageBy((bp) => bp.pulse);
 
     final List<BPChartData> dataPulse = [
-      BPChartData("0", pulseValueAverage,
-          charts.ColorUtil.fromDartColor(Colors.lightBlue)),
-      BPChartData("1", 200 - pulseValueAverage,
-          charts.ColorUtil.fromDartColor(Colors.blue.shade100))
+      BPChartData("0", pulseValueAverage, charts.ColorUtil.fromDartColor(Colors.lightBlue)),
+      BPChartData("1", 200 - pulseValueAverage, charts.ColorUtil.fromDartColor(Colors.blue.shade100))
     ];
 
     var seriesDataPulse = [
@@ -119,8 +113,7 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
-  Widget donutChartWidget(List<charts.Series<BPChartData, dynamic>> seriesData,
-      int value, Color colorData, String title) {
+  Widget donutChartWidget(List<charts.Series<BPChartData, dynamic>> seriesData, int value, Color colorData, String title) {
     return SizedBox(
       width: (MediaQuery.of(context).size.width / 3),
       height: (MediaQuery.of(context).size.width / 3),
@@ -180,13 +173,10 @@ class _StatsPageState extends State<StatsPage> {
     // var type4 = (listItem.count((n) => n.type == 4));
 
     final List<BPChartData> dataType = [
-      BPChartData(
-          "Hypo", type0, charts.ColorUtil.fromDartColor(Colors.lightBlue)),
-      BPChartData(
-          "Normal", type1, charts.ColorUtil.fromDartColor(Colors.lightGreen)),
+      BPChartData("Hypo", type0, charts.ColorUtil.fromDartColor(Colors.lightBlue)),
+      BPChartData("Normal", type1, charts.ColorUtil.fromDartColor(Colors.lightGreen)),
       BPChartData("Pre", type2, charts.ColorUtil.fromDartColor(Colors.amber)),
-      BPChartData(
-          "Stage1", type3, charts.ColorUtil.fromDartColor(Colors.orange)),
+      BPChartData("Stage1", type3, charts.ColorUtil.fromDartColor(Colors.orange)),
       BPChartData("Stage2", type4, charts.ColorUtil.fromDartColor(Colors.red))
     ];
 
@@ -197,8 +187,7 @@ class _StatsPageState extends State<StatsPage> {
         measureFn: (BPChartData bpChartData, _) => bpChartData.value,
         colorFn: (BPChartData bpChartData, _) => bpChartData.color,
         data: dataType,
-        labelAccessorFn: (BPChartData bpChartData, _) =>
-            '${bpChartData.value.toStringAsFixed(1)}\%',
+        labelAccessorFn: (BPChartData bpChartData, _) => '${bpChartData.value.toStringAsFixed(1)}\%',
       )
     ];
 
@@ -224,17 +213,13 @@ class _StatsPageState extends State<StatsPage> {
 
     for (int day = 1; day <= totalDay; day++) {
       // check data in day and calculate its average
-      String dateFormat = DateFormat('y-M-dd ')
-          .format(DateTime(numYear, numMonth, day))
-          .toString();
+      String dateFormat = DateFormat('y-MM-dd ').format(DateTime(numYear, numMonth, day)).toString();
 
       List<dynamic> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
 
-      timeSeriesSystolic.add(BPChartDataInt(day, valueSysDia[0].toInt(),
-          charts.ColorUtil.fromDartColor(Colors.redAccent)));
+      timeSeriesSystolic.add(BPChartDataInt(day, valueSysDia[0].toInt(), charts.ColorUtil.fromDartColor(Colors.redAccent)));
 
-      timeSeriesDiastolic.add(BPChartDataInt(day, valueSysDia[1].toInt(),
-          charts.ColorUtil.fromDartColor(Colors.lightGreen)));
+      timeSeriesDiastolic.add(BPChartDataInt(day, valueSysDia[1].toInt(), charts.ColorUtil.fromDartColor(Colors.lightGreen)));
     }
 
     List<charts.Series<BPChartDataInt, int>> seriesDataType = [
@@ -311,8 +296,7 @@ class _StatsPageState extends State<StatsPage> {
                 ],
               );
             } else {
-              return Container(
-                  alignment: Alignment.topCenter, child: Text("No Data"));
+              return Container(alignment: Alignment.topCenter, child: Text("No Data"));
             }
           }
           return Container();

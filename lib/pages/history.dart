@@ -37,21 +37,15 @@ class _HistoryPageState extends State<HistoryPage> {
     //box.clear();
 
     // let's check filter value
-    //if (_dateTime == null) {
-    //  _dateTime = DateTime.now();
-    //}
+    if (_dateTime == null) {
+      _dateTime = DateTime.now();
+    }
 
     // return filter value
     if (filter != null) {
-      return box.values
-          .where((bp) => bp.dateTime
-              .toString()
-              .startsWith(DateFormat('y-M-').format(DateTime.now())))
-          .where((bp) => bp.type == filter);
+      return box.values.where((bp) => bp.dateTime.toString().startsWith(DateFormat('y-MM-').format(DateTime.now()))).where((bp) => bp.type == filter);
     } else {
-      return box.values.where((bp) => bp.dateTime
-          .toString()
-          .startsWith(DateFormat('y-M-').format(DateTime.now())));
+      return box.values.where((bp) => bp.dateTime.toString().startsWith(DateFormat('y-MM-').format(DateTime.now())));
     }
   }
 
@@ -67,16 +61,11 @@ class _HistoryPageState extends State<HistoryPage> {
             onTap: () {
               // recreate key from dateTime
               var _key = DateTime(
-                      int.parse(
-                          DateFormat('yyy').format(listItem[index].dateTime)),
-                      int.parse(
-                          DateFormat('MM').format(listItem[index].dateTime)),
-                      int.parse(
-                          DateFormat('dd').format(listItem[index].dateTime)),
-                      int.parse(
-                          DateFormat('HH').format(listItem[index].dateTime)),
-                      int.parse(
-                          DateFormat('mm').format(listItem[index].dateTime)))
+                      int.parse(DateFormat('yyy').format(listItem[index].dateTime)),
+                      int.parse(DateFormat('MM').format(listItem[index].dateTime)),
+                      int.parse(DateFormat('dd').format(listItem[index].dateTime)),
+                      int.parse(DateFormat('HH').format(listItem[index].dateTime)),
+                      int.parse(DateFormat('mm').format(listItem[index].dateTime)))
                   .microsecondsSinceEpoch
                   .toString();
 
@@ -170,11 +159,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   SizedBox(
                     height: 8.0,
                   ),
-                  Text(DateFormat('d/M/y H:mm')
-                          .format(listItem[index].dateTime) +
-                      " | " +
-                      listItem[index].pulse.toString() +
-                      " bpm"),
+                  Text(DateFormat('d/MM/y H:mm').format(listItem[index].dateTime) + " | " + listItem[index].pulse.toString() + " bpm"),
                 ],
               ),
             ]),
@@ -288,8 +273,7 @@ class _HistoryPageState extends State<HistoryPage> {
               },
             );
           } else {
-            return Container(
-                alignment: Alignment.topCenter, child: Text("No Data"));
+            return Container(alignment: Alignment.topCenter, child: Text("No Data"));
           }
         }
         return Container();
