@@ -69,7 +69,7 @@ class _HistoryPageState extends State<HistoryPage> {
                   .microsecondsSinceEpoch
                   .toString();
 
-              log('delete at key -> ' + _key);
+              //log('delete at key -> ' + _key);
               // add blood pressure data
               if (Hive.isAdapterRegistered(1) == false) {
                 Hive.registerAdapter(BpAdapter());

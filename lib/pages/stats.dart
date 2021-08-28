@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/widgets/donutpiechart.dart';
 import 'package:blood_pressure/widgets/simplebarchart.dart';
@@ -256,13 +255,12 @@ class _StatsPageState extends State<StatsPage> {
       }
     });
 
-    log(dateString + "->" + listOfSysValue.max().toString());
+    //log(dateString + "->" + listOfSysValue.max().toString());
 
     return [(listOfSysValue.max()), (listOfDiaValue.max())];
   }
 
   // TODO : implement filter for previous statistics
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

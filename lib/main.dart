@@ -25,6 +25,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: kPrimaryColor,
         canvasColor: kCanvasColor,
         textTheme: kTextTheme,
+        appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(
+            color: kPrimaryColor,
+          ),
+        ),
       ),
       home: HomePage(),
     );
