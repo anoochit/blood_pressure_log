@@ -24,7 +24,6 @@ class _SettingPageState extends State<SettingPage> {
   ];
 
   List<IconData> menuIcon = [
-    Icons.settings_backup_restore_outlined,
     Icons.import_export_rounded,
     Icons.info_outline_rounded,
   ];

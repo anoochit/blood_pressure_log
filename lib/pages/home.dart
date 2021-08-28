@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage> {
         elevation: 0.0,
         actions: [
           ((_currentIndex == 1) || (_currentIndex == 2))
-              ? InkWell(
-                  child: Icon(Icons.share),
-                  onTap: () async {
+              ? IconButton(
+                  icon: Icon(Icons.share),
+                  onPressed: () {
                     // take snapshot and share
                     screenshotController.capture(delay: Duration(milliseconds: 200)).then((uint8List) async {
                       shareImage(uint8List);
