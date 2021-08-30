@@ -7,6 +7,7 @@ import 'package:blood_pressure/pages/setting.dart';
 import 'package:blood_pressure/pages/stats.dart';
 import 'package:blood_pressure/style/style.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     // take snapshot and share
                     screenshotController.capture(delay: Duration(milliseconds: 200)).then((uint8List) async {
+                      saveToGallery(uint8List);
                       shareImage(uint8List);
                     }).catchError((onError) {
                       log(onError.toString());
@@ -114,8 +116,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  saveToGallery(File image) async {
-    final result = await ImageGallerySaver.saveImage(image.readAsBytesSync());
+  // TODO : should check error when cannot save to gallery
+  saveToGallery(Uint8List image) async {
+    final result = await ImageGallerySaver.saveImage(image);
+    Fluttertoast.showToast(msg: "Saved data to Gallery");
     print("File Saved to Gallery");
   }
 

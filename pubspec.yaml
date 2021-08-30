@@ -18,7 +18,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.2.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
   charts_flutter: ^0.11.0
@@ -52,15 +52,14 @@ dev_dependencies:
   hive_generator: ^1.1.0
 
 flutter_icons:
-  android: "launcher_icon"
+  android: 'launcher_icon'
   ios: true
-  image_path: "assets/icons/launcher.png"
+  image_path: 'assets/icons/launcher.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
