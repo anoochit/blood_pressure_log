@@ -37,15 +37,18 @@ class _HistoryPageState extends State<HistoryPage> {
     //box.clear();
 
     // let's check filter value
-    if (_dateTime == null) {
-      _dateTime = DateTime.now();
-    }
+    // if (_dateTime == null) {
+    //   _dateTime = DateTime.now();
+    // }
 
     // return filter value
     if (filter != null) {
-      return box.values.where((bp) => bp.dateTime.toString().startsWith(DateFormat('y-MM-').format(DateTime.now()))).where((bp) => bp.type == filter);
+      // TODO : implement filter with hypertension type
+      //return box.values.where((bp) => bp.dateTime.toString().startsWith(DateFormat('y-MM-').format(DateTime.now()))).where((bp) => bp.type == filter);
+      return box.values.where((bp) => bp.type == filter);
     } else {
-      return box.values.where((bp) => bp.dateTime.toString().startsWith(DateFormat('y-MM-').format(DateTime.now())));
+      //return box.values.where((bp) => bp.dateTime.toString().startsWith(DateFormat('y-MM-').format(DateTime.now())));
+      return box.values;
     }
   }
 

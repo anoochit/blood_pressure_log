@@ -32,6 +32,22 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
+  Future<Iterable<Bp>> getAllData() async {
+    // add blood pressure data
+    if (Hive.isAdapterRegistered(1) == false) {
+      Hive.registerAdapter(BpAdapter());
+    }
+    // hive open box
+    Box<Bp> box = await Hive.openBox<Bp>("bloodPressure");
+
+    // sort
+    var items = box.values;
+    items.map((e) => e).toList().sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
+    //box.clear();
+    return items;
+  }
+
   Widget buildSumaryStats(List<Bp> listItem) {
     // systolic value
     var systolicValueAverage = listItem.averageBy((bp) => bp.systolic);
@@ -89,6 +105,7 @@ class _StatsPageState extends State<StatsPage> {
 
     return Flex(
       direction: Axis.horizontal,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         donutChartWidget(
           seriesDataSystolic,
@@ -197,6 +214,7 @@ class _StatsPageState extends State<StatsPage> {
     );
   }
 
+  /*
   Widget buildTimeseriesStats(List<Bp> listItem) {
     // get days in month
     var numMonth = DateFormat('M').format(DateTime.now()).toInt();
@@ -220,6 +238,41 @@ class _StatsPageState extends State<StatsPage> {
 
       timeSeriesDiastolic.add(BPChartDataInt(day, valueSysDia[1].toInt(), charts.ColorUtil.fromDartColor(Colors.lightGreen)));
     }
+
+    List<charts.Series<BPChartDataInt, int>> seriesDataType = [
+      new charts.Series<BPChartDataInt, int>(
+        id: 'Dia',
+        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
+        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
+        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
+        data: timeSeriesDiastolic,
+      ),
+      new charts.Series<BPChartDataInt, int>(
+        id: 'Sys',
+        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
+        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
+        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
+        data: timeSeriesSystolic,
+      ),
+    ];
+
+    return StackedAreaLineChart(seriesDataType, animate: true);
+  }
+  */
+
+  Widget buildAllTimeseriesStats(List<Bp> listItem) {
+    // list all data in hive
+    List<BPChartDataInt> timeSeriesSystolic = [];
+    List<BPChartDataInt> timeSeriesDiastolic = [];
+    int i = 0;
+    listItem.forEach((item) {
+      DateTime dateTime = DateTime(item.dateTime.year, item.dateTime.month, item.dateTime.day);
+      String dateFormat = DateFormat('y-MM-dd ').format(dateTime).toString();
+      //List<dynamic> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
+      timeSeriesSystolic.add(BPChartDataInt(i, item.systolic.toInt(), charts.ColorUtil.fromDartColor(Colors.redAccent)));
+      timeSeriesDiastolic.add(BPChartDataInt(i, item.diastolic.toInt(), charts.ColorUtil.fromDartColor(Colors.lightGreen)));
+      i++;
+    });
 
     List<charts.Series<BPChartDataInt, int>> seriesDataType = [
       new charts.Series<BPChartDataInt, int>(
@@ -265,7 +318,8 @@ class _StatsPageState extends State<StatsPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: FutureBuilder(
-        future: getMonthData(),
+        //future: getMonthData(),
+        future: getAllData(),
         builder: (BuildContext context, AsyncSnapshot<Iterable<Bp>> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data.length != 0) {
@@ -284,7 +338,7 @@ class _StatsPageState extends State<StatsPage> {
                       padding: EdgeInsets.symmetric(horizontal: 8.0),
                       width: MediaQuery.of(context).size.width,
                       height: (MediaQuery.of(context).size.height / 3.2),
-                      child: buildTimeseriesStats(listItem)),
+                      child: buildAllTimeseriesStats(listItem)),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                     width: MediaQuery.of(context).size.width,
