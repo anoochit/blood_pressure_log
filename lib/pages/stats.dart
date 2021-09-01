@@ -268,7 +268,6 @@ class _StatsPageState extends State<StatsPage> {
     listItem.forEach((item) {
       DateTime dateTime = DateTime(item.dateTime.year, item.dateTime.month, item.dateTime.day);
       String dateFormat = DateFormat('y-MM-dd ').format(dateTime).toString();
-      //List<dynamic> valueSysDia = getAverageDataFromDay(dateFormat, listItem);
       timeSeriesSystolic.add(BPChartDataInt(i, item.systolic.toInt(), charts.ColorUtil.fromDartColor(Colors.redAccent)));
       timeSeriesDiastolic.add(BPChartDataInt(i, item.diastolic.toInt(), charts.ColorUtil.fromDartColor(Colors.lightGreen)));
       i++;

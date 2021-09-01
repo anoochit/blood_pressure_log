@@ -54,120 +54,121 @@ class _HistoryPageState extends State<HistoryPage> {
 
   Widget _buildList(BuildContext context, List<Bp> listItem, int index) {
     return Slidable(
-        key: ValueKey(index),
-        actionPane: SlidableDrawerActionPane(),
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () {
-              // recreate key from dateTime
-              var _key = DateTime(
-                      int.parse(DateFormat('yyy').format(listItem[index].dateTime)),
-                      int.parse(DateFormat('MM').format(listItem[index].dateTime)),
-                      int.parse(DateFormat('dd').format(listItem[index].dateTime)),
-                      int.parse(DateFormat('HH').format(listItem[index].dateTime)),
-                      int.parse(DateFormat('mm').format(listItem[index].dateTime)))
-                  .microsecondsSinceEpoch
-                  .toString();
+      key: ValueKey(index),
+      actionPane: SlidableDrawerActionPane(),
+      secondaryActions: <Widget>[
+        IconSlideAction(
+          caption: 'Delete',
+          color: Colors.red,
+          icon: Icons.delete,
+          onTap: () {
+            // recreate key from dateTime
+            var _key = DateTime(
+                    int.parse(DateFormat('yyy').format(listItem[index].dateTime)),
+                    int.parse(DateFormat('MM').format(listItem[index].dateTime)),
+                    int.parse(DateFormat('dd').format(listItem[index].dateTime)),
+                    int.parse(DateFormat('HH').format(listItem[index].dateTime)),
+                    int.parse(DateFormat('mm').format(listItem[index].dateTime)))
+                .microsecondsSinceEpoch
+                .toString();
 
-              //log('delete at key -> ' + _key);
-              // add blood pressure data
-              if (Hive.isAdapterRegistered(1) == false) {
-                Hive.registerAdapter(BpAdapter());
-              }
-              // hive open box
-              setState(() {
-                Hive.openBox<Bp>("bloodPressure").then((box) {
-                  box.delete(_key).then((value) {
-                    Fluttertoast.showToast(
-                      msg: "Deleted",
-                      toastLength: Toast.LENGTH_SHORT,
-                      timeInSecForIosWeb: 1,
-                    );
-                  });
+            //log('delete at key -> ' + _key);
+            // add blood pressure data
+            if (Hive.isAdapterRegistered(1) == false) {
+              Hive.registerAdapter(BpAdapter());
+            }
+            // hive open box
+            setState(() {
+              Hive.openBox<Bp>("bloodPressure").then((box) {
+                box.delete(_key).then((value) {
+                  Fluttertoast.showToast(
+                    msg: "Deleted",
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                  );
                 });
               });
-            },
-          ),
-        ],
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-          child: Container(
-            child: Row(children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: typeList[(listItem[index].type)].color,
-                    borderRadius: BorderRadius.circular(60),
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(
-                        alignment: Alignment.topCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 6.0),
-                          child: Text(
-                            listItem[index].systolic.toString(),
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Divider(
-                            thickness: 1.2,
+            });
+          },
+        ),
+      ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: Container(
+          child: Row(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: typeList[(listItem[index].type)].color,
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                child: Stack(
+                  children: [
+                    Container(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 6.0),
+                        child: Text(
+                          listItem[index].systolic.toString(),
+                          style: TextStyle(
+                            fontSize: 14.0,
                             color: Colors.white,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 6.0),
-                          child: Text(
-                            listItem[index].diastolic.toString(),
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Divider(
+                          thickness: 1.2,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 6.0),
+                        child: Text(
+                          listItem[index].diastolic.toString(),
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    typeList[(listItem[index].type)].title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[700],
-                    ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  typeList[(listItem[index].type)].title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[700],
                   ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  Text(DateFormat('d/MM/y H:mm').format(listItem[index].dateTime) + " | " + listItem[index].pulse.toString() + " bpm"),
-                ],
-              ),
-            ]),
-          ),
-        ));
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Text(DateFormat('d/MM/y H:mm').format(listItem[index].dateTime) + " | " + listItem[index].pulse.toString() + " bpm"),
+              ],
+            ),
+          ]),
+        ),
+      ),
+    );
   }
 
   // TODO : implement filter for previous history data
