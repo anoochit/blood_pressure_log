@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/models/type_item.dart';
 import 'package:flutter/material.dart';
@@ -172,7 +170,6 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   // TODO : implement filter for previous history data
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

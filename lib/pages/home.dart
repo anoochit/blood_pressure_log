@@ -118,9 +118,9 @@ class _HomePageState extends State<HomePage> {
 
   // TODO : should check error when cannot save to gallery
   saveToGallery(Uint8List image) async {
-    final result = await ImageGallerySaver.saveImage(image);
-    Fluttertoast.showToast(msg: "Saved data to Gallery");
-    print("File Saved to Gallery");
+    await ImageGallerySaver.saveImage(image);
+    Fluttertoast.showToast(msg: "Saved image to Gallery");
+    print("Saved to Gallery");
   }
 
   shareImage(Uint8List uint8List) async {

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:blood_pressure/models/bp.dart';
 import 'package:blood_pressure/widgets/donutpiechart.dart';
 import 'package:blood_pressure/widgets/simplebarchart.dart';
@@ -264,16 +263,23 @@ class _StatsPageState extends State<StatsPage> {
     // list all data in hive
     List<BPChartDataInt> timeSeriesSystolic = [];
     List<BPChartDataInt> timeSeriesDiastolic = [];
+    List<BPChartDataInt> timeSeriesPulse = [];
     int i = 0;
     listItem.forEach((item) {
-      DateTime dateTime = DateTime(item.dateTime.year, item.dateTime.month, item.dateTime.day);
-      String dateFormat = DateFormat('y-MM-dd ').format(dateTime).toString();
       timeSeriesSystolic.add(BPChartDataInt(i, item.systolic.toInt(), charts.ColorUtil.fromDartColor(Colors.redAccent)));
       timeSeriesDiastolic.add(BPChartDataInt(i, item.diastolic.toInt(), charts.ColorUtil.fromDartColor(Colors.lightGreen)));
+      timeSeriesPulse.add(BPChartDataInt(i, item.pulse.toInt(), charts.ColorUtil.fromDartColor(Colors.lightBlue)));
       i++;
     });
 
     List<charts.Series<BPChartDataInt, int>> seriesDataType = [
+      new charts.Series<BPChartDataInt, int>(
+        id: 'Plus',
+        domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
+        measureFn: (BPChartDataInt bpChartData, _) => bpChartData.value,
+        colorFn: (BPChartDataInt bpChartData, _) => bpChartData.color,
+        data: timeSeriesPulse,
+      ),
       new charts.Series<BPChartDataInt, int>(
         id: 'Dia',
         domainFn: (BPChartDataInt bpChartData, _) => bpChartData.id,
